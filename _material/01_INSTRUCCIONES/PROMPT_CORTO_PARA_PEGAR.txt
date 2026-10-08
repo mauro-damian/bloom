@@ -1,0 +1,9 @@
+Leé primero `_material/01_INSTRUCCIONES/LEER_PRIMERO.md` , después `_material/01_INSTRUCCIONES/PROMPT_BLOOM.md` y `_material/01_INSTRUCCIONES/DIRECCION_VISUAL.md`. El diseño sale de DIRECCION_VISUAL.md: no improvises otra estética.
+
+Usá todo el material de `_material/` como fuente del proyecto. La referencia visual principal son las páginas del catálogo en `_material/04_REFERENCIAS/catalogo_paginas/`. El mockup HTML es solo fuente de contenido, no de diseño.
+
+Construí la web institucional de Bloom con React 18 + Vite + MUI 5, JavaScript, sin backend. La tienda es Tiendanube: acá solo se enlaza.
+
+Antes de escribir las secciones, mostrame la estructura de carpetas y `src/theme.js`. Después construí la Home completa y frená para que la revise.
+
+No inventes datos ni tomes decisiones de producto. Lo que falte, dejalo como pendiente en el README.

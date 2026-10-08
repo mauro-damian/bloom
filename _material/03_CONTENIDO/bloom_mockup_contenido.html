@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bloom Coffee Hub — Prototipo Navegable (Multi-página)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --celeste:#A9DAEC; --celeste-claro:#E7F4F9; --marron:#7C4A30; --naranja:#F18B58;
+    --crema:#FFFAF8; --durazno:#F8EBE0; --beige:#ECB78D; --coral:#F8C3AF; --rosa:#F6D0CC; --tinta:#3A2418;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0; background:var(--crema); color:var(--tinta); font-family:'Nunito', sans-serif; line-height:1.6;}
+  h1,h2,h3{font-family:'Baloo 2', sans-serif; font-weight:700; margin:0; color:var(--marron);}
+  .script{font-family:'Caveat', cursive; font-weight:700;}
+
+  /* FAKE BROWSER CHROME — para mostrar que son páginas con URL real, no anclas */
+  .browser-chrome{
+    background:#e8dfd3; padding:0.6rem 1rem; display:flex; align-items:center; gap:0.6rem;
+    border-bottom:1px solid #d4c6b3; position:sticky; top:0; z-index:100;
+  }
+  .browser-dots{display:flex; gap:0.4rem;}
+  .browser-dots span{width:10px; height:10px; border-radius:50%; background:#c9b8a8;}
+  .browser-url{
+    flex:1; background:var(--crema); border-radius:100px; padding:0.4rem 1rem; font-family:'Nunito',sans-serif;
+    font-size:0.82rem; color:var(--marron); font-weight:600; max-width:420px; margin:0 auto;
+    display:flex; align-items:center; gap:0.4rem;
+  }
+  .browser-url .lock{opacity:0.5;}
+
+  nav{
+    position:sticky; top:37px; z-index:90; background:rgba(255,250,248,0.94); backdrop-filter:blur(6px);
+    border-bottom:2px solid var(--celeste); display:flex; align-items:center; justify-content:space-between; padding:0.9rem 6vw;
+  }
+  .logo{font-family:'Caveat',cursive; font-size:1.9rem; color:var(--marron); font-weight:700; cursor:pointer; background:none; border:none;}
+  .navlinks{display:flex; gap:1.6rem; flex-wrap:wrap;}
+  .navlinks button{
+    font-family:'Baloo 2', sans-serif; font-weight:600; font-size:0.85rem; color:var(--marron);
+    background:none; border:none; cursor:pointer; letter-spacing:0.02em; padding:0;
+  }
+  .navlinks button.active{color:var(--naranja);}
+  .navlinks button:hover{color:var(--naranja);}
+  .pill-btn{
+    background:var(--naranja); color:white; font-family:'Baloo 2',sans-serif; font-weight:700;
+    padding:0.55rem 1.3rem; border-radius:100px; font-size:0.85rem; text-decoration:none; border:none; cursor:pointer;
+    box-shadow:0 3px 0 rgba(124,74,48,0.25);
+  }
+
+  .page{display:none;}
+  .page.active{display:block;}
+  section{padding:5.5rem 6vw; position:relative; overflow:hidden;}
+
+  .hero{
+    background:linear-gradient(160deg, var(--celeste) 0%, var(--celeste-claro) 55%, var(--crema) 100%);
+    min-height:80vh; display:flex; flex-direction:column; justify-content:center; text-align:center;
+  }
+  .hero .tag{
+    display:inline-block; background:white; color:var(--naranja); font-family:'Baloo 2',sans-serif; font-weight:700;
+    font-size:0.8rem; padding:0.4rem 1rem; border-radius:100px; margin:0 auto 1.4rem; box-shadow:0 2px 8px rgba(124,74,48,0.15);
+  }
+  .hero h1{font-size:clamp(2rem,4.5vw,3.4rem); max-width:18ch; margin:0 auto;}
+  .hero p{max-width:48ch; margin:1.3rem auto 0; font-size:1.05rem; color:var(--marron);}
+  .hero-ctas{display:flex; gap:1rem; justify-content:center; margin-top:2.2rem; flex-wrap:wrap;}
+  .btn-primary{
+    background:var(--marron); color:white; font-family:'Baloo 2',sans-serif; font-weight:700; padding:0.9rem 1.8rem;
+    border-radius:100px; text-decoration:none; font-size:0.95rem; box-shadow:0 4px 0 rgba(124,74,48,0.25); border:none; cursor:pointer;
+    display:inline-block;
+  }
+  .btn-secondary{
+    background:white; color:var(--marron); font-family:'Baloo 2',sans-serif; font-weight:700; padding:0.9rem 1.8rem;
+    border-radius:100px; text-decoration:none; font-size:0.95rem; border:2px solid var(--marron); cursor:pointer; display:inline-block;
+  }
+  .stickers{display:flex; gap:0.8rem; justify-content:center; margin-top:2.6rem; flex-wrap:wrap;}
+  .sticker{
+    background:white; border-radius:16px; padding:0.5rem 1rem; font-family:'Baloo 2',sans-serif; font-size:0.75rem;
+    font-weight:700; color:var(--marron); box-shadow:0 3px 10px rgba(124,74,48,0.12); transform:rotate(-3deg);
+  }
+  .sticker:nth-child(2){transform:rotate(2deg); color:var(--naranja);}
+  .sticker:nth-child(3){transform:rotate(-1deg);}
+
+  .eyebrow{
+    font-family:'Baloo 2',sans-serif; font-size:0.78rem; font-weight:700; letter-spacing:0.05em; color:var(--naranja);
+    text-transform:uppercase; display:block; margin-bottom:0.6rem;
+  }
+  .section-title{font-size:clamp(1.7rem,3.2vw,2.5rem); max-width:22ch;}
+
+  .historia{background:var(--durazno);}
+  .historia-grid{display:grid; grid-template-columns:1fr 1fr; gap:3rem; align-items:center; margin-top:2.5rem;}
+  @media (max-width:800px){.historia-grid{grid-template-columns:1fr;}}
+  .naming-card{background:white; border-radius:20px; padding:2rem; box-shadow:0 6px 20px rgba(124,74,48,0.1);}
+  .naming-card .script{font-size:2.2rem; color:var(--naranja); display:block; margin-bottom:0.6rem;}
+
+  .cafe-page-body{background:var(--crema);}
+  .cafe-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1.6rem; margin-top:2.6rem;}
+  @media (max-width:800px){.cafe-grid{grid-template-columns:1fr;}}
+  .cafe-card{background:var(--celeste-claro); border-radius:20px; padding:1.8rem; text-align:center;}
+  .cafe-card .icon{font-size:2.2rem;}
+  .cafe-card h3{font-size:1.1rem; margin:0.6rem 0 0.4rem;}
+  .cafe-card p{font-size:0.88rem; margin:0; color:#5c4a3a;}
+  .tag-row{display:flex; gap:0.5rem; justify-content:center; margin-top:2.4rem; flex-wrap:wrap;}
+  .tag-pill{background:var(--marron); color:white; font-family:'Baloo 2',sans-serif; font-weight:700; font-size:0.72rem; padding:0.4rem 0.9rem; border-radius:100px;}
+
+  .mayorista-hero{background:linear-gradient(160deg, var(--beige) 0%, var(--durazno) 100%); color:var(--marron);}
+  .mayorista-hero .tag{background:var(--marron); color:var(--crema);}
+  .mayorista-body{background:var(--crema);}
+  .mayorista-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1.4rem; margin-top:2.4rem;}
+  @media (max-width:800px){.mayorista-grid{grid-template-columns:1fr;}}
+  .mayorista-line{background:var(--durazno); border-radius:18px; padding:1.6rem; text-align:center;}
+  .mayorista-line .icon{font-size:2rem;}
+  .mayorista-line h3{font-size:1rem; margin:0.5rem 0 0.3rem;}
+  .mayorista-line p{font-size:0.82rem; color:#5c4a3a; margin:0;}
+  .cond-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:1rem; margin-top:2.4rem;}
+  @media (max-width:800px){.cond-grid{grid-template-columns:1fr;}}
+  .cond-item{background:white; border-left:4px solid var(--naranja); border-radius:10px; padding:1.1rem 1.3rem;}
+  .cond-item b{color:var(--marron); font-family:'Baloo 2',sans-serif; font-size:0.9rem; display:block; margin-bottom:0.2rem;}
+  .cond-item span{font-size:0.85rem; color:#5c4a3a;}
+  .pending-badge{
+    display:inline-block; background:var(--naranja); color:white; font-family:'Baloo 2',sans-serif;
+    font-weight:700; font-size:0.72rem; padding:0.35rem 0.9rem; border-radius:100px; margin-bottom:1.2rem;
+  }
+
+  .comprar{background:linear-gradient(135deg, var(--marron) 0%, #6a3f28 100%); color:var(--crema);}
+  .comprar .tag{background:rgba(255,250,248,0.15); color:var(--celeste);}
+  .comprar h1{color:var(--crema);}
+  .comprar p.lead{color:var(--coral);}
+  .comprar-body{background:var(--crema); color:var(--tinta);}
+  .comprar-grid{display:grid; grid-template-columns:1fr 1fr; gap:1.6rem; margin-top:1rem;}
+  @media (max-width:800px){.comprar-grid{grid-template-columns:1fr;}}
+  .comprar-card{
+    background:var(--celeste-claro); border-radius:20px; padding:2.2rem; display:flex; flex-direction:column;
+    align-items:flex-start; gap:0.9rem;
+  }
+  .comprar-card .icon{font-size:2.4rem;}
+  .comprar-card h3{font-size:1.25rem;}
+  .comprar-card p{color:#5c4a3a; font-size:0.92rem; margin:0;}
+  .comprar-note{margin-top:2rem; font-size:0.85rem; color:#8a7360; text-align:center;}
+
+  /* COMPRA ONLINE — secciones nuevas */
+  .como-funciona{background:var(--durazno);}
+  .pasos-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1.6rem; margin-top:2.6rem;}
+  @media (max-width:800px){.pasos-grid{grid-template-columns:1fr;}}
+  .paso-card{background:white; border-radius:20px; padding:2rem 1.6rem; text-align:center; position:relative;}
+  .paso-num{
+    width:42px; height:42px; border-radius:50%; background:var(--naranja); color:white; font-family:'Baloo 2',sans-serif;
+    font-weight:800; font-size:1.2rem; display:flex; align-items:center; justify-content:center; margin:0 auto 1rem;
+  }
+  .paso-card h3{font-size:1.05rem; margin-bottom:0.4rem;}
+  .paso-card p{font-size:0.85rem; color:#5c4a3a; margin:0;}
+
+  .video-slot{
+    margin-top:2.8rem; background:#fff3cd; border:2px dashed #c9a227; border-radius:20px; padding:3rem 2rem;
+    text-align:center; color:#6b5210;
+  }
+  .video-slot .icon{font-size:2.2rem;}
+  .video-slot h4{font-family:'Baloo 2',sans-serif; font-size:1.05rem; color:#6b5210; margin:0.6rem 0 0.4rem;}
+  .video-slot p{font-size:0.85rem; margin:0; max-width:44ch; margin:0 auto;}
+
+  .storytelling-online{background:var(--marron); color:var(--crema);}
+  .story-grid{display:grid; grid-template-columns:1fr 1fr; gap:3rem; align-items:center; margin-top:2.4rem;}
+  @media (max-width:800px){.story-grid{grid-template-columns:1fr;}}
+  .story-grid p{color:var(--coral); font-size:0.98rem; line-height:1.7;}
+  .trust-badge{
+    background:rgba(255,250,248,0.1); border-radius:16px; padding:1.4rem; display:flex; align-items:center; gap:1rem; margin-top:1.4rem;
+  }
+  .trust-badge .stars{font-size:1.6rem; color:var(--naranja);}
+  .trust-badge .txt{font-size:0.85rem; color:var(--celeste-claro);}
+  .trust-badge b{color:var(--crema); font-family:'Baloo 2',sans-serif; display:block; font-size:1.1rem;}
+
+  .categorias-teaser{background:var(--crema);}
+  .cat-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:1.2rem; margin-top:2.4rem;}
+  @media (max-width:800px){.cat-grid{grid-template-columns:repeat(2,1fr);}}
+  .cat-card{background:var(--celeste-claro); border-radius:16px; padding:1.5rem 1rem; text-align:center;}
+  .cat-card .icon{font-size:1.8rem;}
+  .cat-card h4{font-size:0.9rem; margin:0.5rem 0 0;}
+
+  .faq-online{background:var(--durazno);}
+  .faq-item{background:white; border-radius:14px; padding:1.3rem 1.6rem; margin-top:1rem;}
+  .faq-item h4{font-family:'Baloo 2',sans-serif; font-size:0.95rem; color:var(--marron); margin:0 0 0.4rem;}
+  .faq-item p{font-size:0.85rem; color:#5c4a3a; margin:0;}
+  .faq-pending{color:var(--naranja); font-weight:700;}
+
+  /* MAYORISTA — secciones nuevas */
+  .proceso-mayorista{background:var(--crema);}
+  .diferenciador{background:var(--marron); color:var(--crema);}
+  .diferenciador .story-grid p{color:var(--coral);}
+  .cat-grid-4{display:grid; grid-template-columns:repeat(4,1fr); gap:1.4rem; margin-top:2.4rem;}
+  @media (max-width:800px){.cat-grid-4{grid-template-columns:repeat(2,1fr);}}
+  .loyalty-teaser{
+    background:var(--naranja); color:white; border-radius:20px; padding:2rem 2.4rem; margin-top:3rem;
+    display:flex; align-items:center; gap:1.4rem; flex-wrap:wrap;
+  }
+  .loyalty-teaser .icon{font-size:2.2rem;}
+  .loyalty-teaser h4{color:white; font-size:1.1rem; margin:0 0 0.3rem;}
+  .loyalty-teaser p{color:rgba(255,255,255,0.9); margin:0; font-size:0.9rem;}
+
+  /* NOSOTROS */
+  .nosotros-hero{background:linear-gradient(160deg, var(--rosa) 0%, var(--durazno) 100%); color:var(--marron);}
+  .nosotros-hero .tag{background:var(--marron); color:var(--crema);}
+  .propósito-block{background:var(--crema);}
+  .propósito-block .story-grid{grid-template-columns:1fr 1fr;}
+  .vision-grid{display:grid; grid-template-columns:1fr 1fr; gap:1.6rem; margin-top:2.4rem;}
+  @media (max-width:800px){.vision-grid{grid-template-columns:1fr;}}
+  .vision-card{background:var(--celeste-claro); border-radius:20px; padding:2rem;}
+  .vision-card h3{font-size:1.1rem; margin-bottom:0.6rem;}
+  .vision-card p{font-size:0.9rem; color:#5c4a3a; margin:0;}
+  .pilares-grid{display:grid; grid-template-columns:repeat(5,1fr); gap:1rem; margin-top:2.4rem;}
+  @media (max-width:900px){.pilares-grid{grid-template-columns:repeat(2,1fr);}}
+  .pilar-card{background:white; border-radius:16px; padding:1.4rem 1.1rem; text-align:center; box-shadow:0 4px 14px rgba(124,74,48,0.08);}
+  .pasos-grid-4{grid-template-columns:repeat(4,1fr) !important;}
+  @media (max-width:900px){.pasos-grid-4{grid-template-columns:1fr !important;}}
+  .pilar-card h4{font-size:0.85rem; margin:0; color:var(--marron);}
+  .pilar-card p{font-size:0.8rem; color:#5c4a3a; margin:0.5rem 0 0; line-height:1.4;}
+
+  .cafe-galeria{background:var(--durazno);}
+  .galeria-grid{display:grid; grid-template-columns:1.3fr 1fr; gap:1.2rem; margin-top:2.6rem;}
+  @media (max-width:800px){.galeria-grid{grid-template-columns:1fr;}}
+  .galeria-grid .video-slot{margin-top:0; height:100%; display:flex; flex-direction:column; justify-content:center;}
+  .galeria-col{display:flex; flex-direction:column; gap:1.2rem;}
+  .ocasiones-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1.4rem; margin-top:2.4rem;}
+  @media (max-width:800px){.ocasiones-grid{grid-template-columns:1fr;}}
+  .ocasion-card{text-align:center; padding:1rem;}
+  .ocasion-card .icon{font-size:1.8rem;}
+  .ocasion-card h4{font-size:0.95rem; margin:0.5rem 0 0.3rem;}
+  .ocasion-card p{font-size:0.82rem; color:#5c4a3a; margin:0;}
+
+  /* BOXES MENSUALES */
+  .boxes-hero{background:linear-gradient(160deg, var(--rosa) 0%, var(--coral) 100%); color:var(--marron);}
+  .boxes-hero .tag{background:var(--marron); color:var(--crema);}
+  .prelaunch-badge{
+    display:inline-block; background:var(--marron); color:var(--crema); font-family:'Baloo 2',sans-serif;
+    font-weight:700; font-size:0.75rem; padding:0.4rem 1rem; border-radius:100px; margin-bottom:1.2rem;
+  }
+  .valor-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1.4rem; margin-top:2.6rem;}
+  @media (max-width:800px){.valor-grid{grid-template-columns:1fr;}}
+  .valor-card{text-align:center; padding:1.2rem;}
+  .valor-card .icon{font-size:2rem;}
+  .valor-card h4{font-size:1.05rem; margin:0.6rem 0 0.4rem;}
+  .valor-card p{font-size:0.85rem; color:#5c4a3a; margin:0;}
+  .boxes-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1.4rem; margin-top:2.6rem;}
+  @media (max-width:900px){.boxes-grid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:600px){.boxes-grid{grid-template-columns:1fr;}}
+  .box-card{background:white; border-radius:20px; padding:1.8rem; box-shadow:0 6px 20px rgba(124,74,48,0.08);}
+  .box-card .icon{font-size:2rem;}
+  .box-card h3{font-size:1.1rem; margin:0.6rem 0 0.4rem;}
+  .box-card p{font-size:0.85rem; color:#5c4a3a; margin:0 0 1rem; min-height:2.6rem;}
+  .box-card .precio{font-family:'Baloo 2',sans-serif; font-weight:800; color:var(--marron); font-size:1.15rem;}
+  .box-card .ahorro{display:block; font-size:0.72rem; color:var(--naranja); font-weight:700; margin-top:0.2rem;}
+  .box-proximo{
+    background:var(--durazno); border-radius:20px; padding:1.8rem; display:flex; align-items:center; justify-content:center;
+    text-align:center; color:#8a7360; font-size:0.9rem; border:2px dashed var(--beige);
+  }
+  .waitlist-cta{
+    background:var(--marron); border-radius:20px; padding:2.4rem; text-align:center; margin-top:3rem;
+  }
+  .waitlist-cta h3{color:var(--crema); font-size:1.3rem;}
+  .waitlist-cta p{color:var(--coral); font-size:0.9rem; max-width:44ch; margin:0.6rem auto 1.4rem;}
+  .degustacion{background:var(--naranja); color:white;}
+  .degustacion .eyebrow{color:var(--marron);}
+  .degustacion .section-title{color:white;}
+  .degustacion-lead{color:rgba(255,255,255,0.9); max-width:56ch; font-size:1rem; margin-top:0.4rem;}
+  .deg-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1.2rem; margin-top:2.4rem;}
+  @media (max-width:900px){.deg-grid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:600px){.deg-grid{grid-template-columns:1fr;}}
+  .deg-card{background:white; border-radius:18px; padding:1.5rem; color:var(--tinta);}
+  .deg-card .icon{font-size:1.7rem;}
+  .deg-card h4{font-family:'Baloo 2',sans-serif; font-weight:700; color:var(--marron); font-size:1rem; margin:0.5rem 0 0.4rem;}
+  .deg-card p{font-size:0.78rem; color:#5c4a3a; margin:0;}
+  .deg-cta{
+    background:var(--marron); border-radius:20px; padding:2rem; text-align:center; margin-top:2.4rem;
+  }
+  .deg-cta p{color:var(--coral); font-size:0.9rem; margin:0 0 1.2rem;}
+  .box-card .btn-primary{width:100%; text-align:center; margin-top:0.8rem; font-size:0.85rem; padding:0.7rem 1rem;}
+  .box-card .incluye{font-size:0.74rem; color:#8a7360; margin-top:0.7rem; line-height:1.5; border-top:1px solid var(--durazno); padding-top:0.7rem;}
+  .box-card .incluye b{color:var(--marron); display:block; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.03em; margin-bottom:0.3rem;}
+  .box-warning{
+    background:#fff3cd; border:1px solid #c9a227; border-radius:10px; padding:0.7rem 0.9rem; margin-top:0.7rem;
+    font-size:0.72rem; color:#6b5210; line-height:1.4;
+  }
+
+  /* MENÚ HAMBURGUESA (mobile) */
+  .hamburger{display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:0.4rem;}
+  .hamburger span{width:24px; height:2.5px; background:var(--marron); border-radius:2px; transition:transform .25s, opacity .25s;}
+  .mobile-menu{
+    display:none; flex-direction:column; background:var(--crema); border-bottom:2px solid var(--celeste);
+    padding:0.5rem 6vw 1.2rem; position:sticky; top:73px; z-index:89;
+  }
+  .mobile-menu.open{display:flex;}
+  .mobile-menu button{
+    font-family:'Baloo 2',sans-serif; font-weight:600; font-size:1rem; color:var(--marron); background:none;
+    border:none; text-align:left; padding:0.8rem 0; border-bottom:1px solid var(--celeste-claro); cursor:pointer;
+  }
+  @media (max-width:760px){
+    .navlinks{display:none;}
+    .hamburger{display:flex;}
+  }
+
+  .home-boxes-teaser{
+    background:linear-gradient(120deg, var(--coral) 0%, var(--rosa) 100%); border-radius:24px; padding:2.4rem;
+    display:flex; align-items:center; gap:2rem; flex-wrap:wrap; margin-top:1rem;
+  }
+  .home-boxes-teaser .txt{flex:1; min-width:240px;}
+  .home-boxes-teaser h3{font-size:1.4rem; color:var(--marron);}
+  .home-boxes-teaser p{color:#5c4a3a; font-size:0.92rem; margin:0.5rem 0 1.2rem;}
+
+  .ubicaciones{background:var(--rosa);}
+  .ubic-grid{display:grid; grid-template-columns:1fr 1fr; gap:1.6rem; margin-top:2.4rem;}
+  @media (max-width:800px){.ubic-grid{grid-template-columns:1fr;}}
+  .ubic-card{background:white; border-radius:18px; padding:1.6rem;}
+  .ubic-card h3{font-size:1.05rem;}
+  .ubic-card p{font-size:0.85rem; color:#5c4a3a; margin:0.3rem 0 0;}
+
+  .home-nav-cards{display:grid; grid-template-columns:repeat(3,1fr); gap:1.4rem; margin-top:2.6rem;}
+  @media (max-width:800px){.home-nav-cards{grid-template-columns:1fr;}}
+  .home-nav-card{
+    background:white; border-radius:20px; padding:2rem; text-align:center; box-shadow:0 6px 20px rgba(124,74,48,0.08);
+    cursor:pointer; border:2px solid transparent; transition:border-color .2s;
+  }
+  .home-nav-card:hover{border-color:var(--naranja);}
+  .home-nav-card .icon{font-size:2.4rem;}
+  .home-nav-card h3{font-size:1.15rem; margin:0.7rem 0 0.5rem;}
+  .home-nav-card p{font-size:0.85rem; color:#5c4a3a; margin:0 0 1rem;}
+
+  .contacto{background:var(--marron); color:var(--crema); text-align:center;}
+  .contacto h2{color:var(--crema); font-size:clamp(1.6rem,3vw,2.2rem);}
+  .contacto p{color:var(--coral); max-width:40ch; margin:1rem auto 0;}
+  .selector-row{display:flex; gap:1rem; justify-content:center; margin-top:2rem; flex-wrap:wrap;}
+  .selector-btn{
+    background:var(--crema); color:var(--marron); font-family:'Baloo 2',sans-serif; font-weight:700;
+    padding:1rem 1.6rem; border-radius:16px; font-size:0.9rem; cursor:pointer; border:none;
+  }
+  footer{background:var(--tinta); color:#c9b8a8; text-align:center; padding:1.6rem; font-family:'Nunito',sans-serif; font-size:0.78rem;}
+  .reveal{opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<div class="browser-chrome">
+  <div class="browser-dots"><span></span><span></span><span></span></div>
+  <div class="browser-url"><span class="lock">🔒</span><span id="fakeUrl">bloom.com.ar/</span></div>
+</div>
+
+<nav>
+  <button class="logo" onclick="goTo('home')">Bloom.</button>
+  <div class="navlinks">
+    <button onclick="goTo('nosotros')" data-nav="nosotros">Nosotros</button>
+    <button onclick="goTo('visitanos')" data-nav="visitanos">Café / Visitanos</button>
+    <button onclick="goTo('comprar')" data-nav="comprar">Comprá Online</button>
+    <button onclick="goTo('boxes')" data-nav="boxes">Boxes Mensuales</button>
+    <button onclick="goTo('mayorista')" data-nav="mayorista">Mayorista</button>
+  </div>
+  <button class="pill-btn" onclick="goTo('home')">Contacto</button>
+  <button class="hamburger" onclick="toggleMobileMenu()" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <button onclick="goTo('nosotros'); toggleMobileMenu();" data-nav-m="nosotros">Nosotros</button>
+  <button onclick="goTo('visitanos'); toggleMobileMenu();" data-nav-m="visitanos">Café / Visitanos</button>
+  <button onclick="goTo('comprar'); toggleMobileMenu();" data-nav-m="comprar">Comprá Online</button>
+  <button onclick="goTo('boxes'); toggleMobileMenu();" data-nav-m="boxes">Boxes Mensuales</button>
+  <button onclick="goTo('mayorista'); toggleMobileMenu();" data-nav-m="mayorista">Mayorista</button>
+  <button onclick="goTo('home'); toggleMobileMenu();" data-nav-m="home">Contacto</button>
+</div>
+
+<!-- ============ PÁGINA: HOME ============ -->
+<div class="page active" id="page-home">
+  <section class="hero">
+    <span class="tag">🌿 No Drama Club</span>
+    <h1>Alimentos reales, libres de gluten, azúcar y conservantes,<br>hechos con la calidad que merecés.</h1>
+    <p>Café de especialidad y alimentos funcionales elaborados en nuestro propio centro de producción — para vos, para tu negocio.</p>
+    <div class="hero-ctas">
+      <button class="btn-primary" onclick="goTo('visitanos')">☕ Conocé el Café</button>
+      <button class="btn-secondary" onclick="goTo('mayorista')">📦 Comprá al por mayor</button>
+    </div>
+    <div class="stickers">
+      <span class="sticker">LIBRE DE GLUTEN</span>
+      <span class="sticker">LIBRE DE AZÚCAR</span>
+      <span class="sticker">LIBRE DE CONSERVANTES</span>
+      <span class="sticker">KETO · PALEO</span>
+    </div>
+    <a href="https://share.google/zSVzaLZ6dsVCU7uOG" target="_blank" class="trust-badge" style="text-decoration:none; cursor:pointer; background:white; margin:2rem auto 0; max-width:340px;">
+      <div class="stars">★★★★★</div>
+      <div class="txt" style="color:#5c4a3a;"><b style="color:var(--marron);">4.9 / 5</b>en Google</div>
+    </a>
+  </section>
+
+  <section class="historia reveal">
+    <span class="eyebrow">Nuestra Historia & Calidad</span>
+    <h2 class="section-title">De dónde viene el nombre, y por qué importa la materia prima</h2>
+    <div class="historia-grid">
+      <div class="naming-card">
+        <span class="script">Bloom.</span>
+        <p>En el mundo del café, "bloom" es el momento en que el café molido entra en contacto con el agua caliente y despierta — se hincha, libera aroma y revela todo su potencial. Ese instante breve, cálido y expansivo es la esencia que inspira el nombre.</p>
+      </div>
+      <div>
+        <h3 style="font-size:1.3rem;">Materia prima premium, de punta a punta</h3>
+        <p style="color:#5c4a3a;">Todo lo que vendemos sale de nuestro propio centro de producción (Food Lab) — con control de calidad verificable en cada lote, sin intermediarios ni tercerización.</p>
+        <div class="tag-row" style="justify-content:flex-start;">
+          <span class="tag-pill">Libre de conservantes</span>
+          <span class="tag-pill">Producción propia</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:var(--crema);" class="reveal">
+    <span class="eyebrow">¿Qué estás buscando?</span>
+    <h2 class="section-title">Elegí tu camino</h2>
+    <div class="home-nav-cards">
+      <div class="home-nav-card" onclick="goTo('visitanos')">
+        <div class="icon">☕</div>
+        <h3>Visitar el Café</h3>
+        <p>Menú, experiencia y ubicación de nuestros locales.</p>
+        <span class="btn-secondary">Ver más →</span>
+      </div>
+      <div class="home-nav-card" onclick="goTo('comprar')">
+        <div class="icon">🛍️</div>
+        <h3>Comprá Online</h3>
+        <p>Pedí para delivery o retiro, sin moverte de tu casa.</p>
+        <span class="btn-secondary">Ver más →</span>
+      </div>
+      <div class="home-nav-card" onclick="goTo('mayorista')">
+        <div class="icon">📦</div>
+        <h3>Comprar al por Mayor</h3>
+        <p>Sumá Bloom a tu negocio — gimnasios, dietéticas y más.</p>
+        <span class="btn-secondary">Ver más →</span>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:var(--crema); padding-top:0;" class="reveal">
+    <div class="home-boxes-teaser">
+      <div class="txt">
+        <span class="eyebrow" style="margin-bottom:0.3rem;">Nuevo</span>
+        <h3>Tus favoritos Bloom, todos los meses.</h3>
+        <p>Una caja curada de productos Bloom, pensada para tu forma de comer — sin tener que volver a elegir desde cero cada mes.</p>
+        <button class="btn-primary" onclick="goTo('boxes')">Suscribirme</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="ubicaciones reveal" id="ubicaciones">
+    <span class="eyebrow">Ubicaciones</span>
+    <h2 class="section-title">Encontranos en Mendoza</h2>
+    <div class="ubic-grid">
+      <div class="ubic-card"><h3>📍 Urban Mall / La Puntilla</h3><p>Horarios y mapa a confirmar con el equipo.</p></div>
+      <div class="ubic-card"><h3>📍 Distrito Vistalba Mall</h3><p>Horarios y mapa a confirmar con el equipo.</p></div>
+    </div>
+  </section>
+
+  <section class="contacto reveal">
+    <h2>¿En qué te podemos ayudar?</h2>
+    <p>Elegí una opción para no mezclar consultas de naturaleza distinta.</p>
+    <div class="selector-row">
+      <button class="selector-btn">🙋 Soy cliente</button>
+      <button class="selector-btn">📦 Quiero comprar al por mayor</button>
+    </div>
+  </section>
+</div>
+
+<!-- ============ PÁGINA: NOSOTROS (landing propia) ============ -->
+<div class="page" id="page-nosotros">
+  <section class="nosotros-hero">
+    <span class="tag">🌿 Nuestra Historia</span>
+    <h1 style="color:var(--marron);">Bloom nació de una necesidad real, no de una idea de negocio.</h1>
+    <p style="color:#5c4a3a; max-width:52ch; margin:1.3rem auto 0; font-size:1.05rem;">La historia de por qué existimos, y hacia dónde vamos.</p>
+    <div class="tag-row">
+      <span class="tag-pill">Libre de gluten</span>
+      <span class="tag-pill">Libre de azúcar</span>
+      <span class="tag-pill">Libre de conservantes</span>
+      <span class="tag-pill">Producción propia</span>
+    </div>
+    <a href="https://share.google/zSVzaLZ6dsVCU7uOG" target="_blank" class="trust-badge" style="text-decoration:none; cursor:pointer; background:white; margin:1.6rem auto 0; max-width:340px;">
+      <div class="stars">★★★★★</div>
+      <div class="txt" style="color:#5c4a3a;"><b style="color:var(--marron);">4.9 / 5</b>en Google</div>
+    </a>
+  </section>
+
+  <section class="propósito-block reveal">
+    <span class="eyebrow">Por qué existimos</span>
+    <h2 class="section-title">De una necesidad personal, a un espacio para muchos</h2>
+    <div class="story-grid" style="color:var(--tinta);">
+      <div>
+        <p style="color:#5c4a3a;">Bloom nace de una necesidad personal de Anahí: no encontrar dónde comer rico, libre de gluten y libre de azúcar. Esa búsqueda se convirtió en la certeza de que muchas personas cargaban la misma falta de opciones.</p>
+        <p style="color:#5c4a3a;">Hoy existimos para facilitar la alimentación consciente y saludable en el día a día, demostrando que puede ser rico y sin restricciones — sin resignar sabor, placer ni pertenencia.</p>
+      </div>
+      <div class="video-slot" style="background:var(--celeste-claro); border-color:var(--celeste); color:var(--marron);">
+        <div class="icon">🎥</div>
+        <h4 style="color:var(--marron);">Espacio para video — Conocé nuestro Food Lab</h4>
+        <p style="color:#5c4a3a;">Mostrar el centro de producción y el equipo detrás de Bloom — reutilizable también en Mayorista y Comprá Online.</p>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:var(--durazno);" class="reveal">
+    <span class="eyebrow">Hacia dónde vamos</span>
+    <h2 class="section-title">Nuestra visión</h2>
+    <div class="vision-grid">
+      <div class="vision-card"><h3>🌱 En 1 año</h3><p>Planta de producción consolidada, más puntos de venta y un modelo de franquicia funcionando.</p></div>
+      <div class="vision-card"><h3>🚀 En 5 años</h3><p>Marca referente de alimentación consciente en Argentina, con posibilidad de expansión internacional.</p></div>
+    </div>
+  </section>
+
+  <section class="reveal">
+    <span class="eyebrow">Lo que no negociamos</span>
+    <h2 class="section-title">Nuestros pilares</h2>
+    <div class="pilares-grid">
+      <div class="pilar-card"><h4>Calidad real</h4><p>Materia prima de calidad, transparencia y coherencia en cada producto.</p></div>
+      <div class="pilar-card"><h4>Bienestar sin sacrificio</h4><p>Innovación constante para que lo funcional también sea rico y disfrutable.</p></div>
+      <div class="pilar-card"><h4>Estética y experiencia</h4><p>El diseño, el espacio y la presentación importan tanto como el contenido nutricional.</p></div>
+      <div class="pilar-card"><h4>Conciencia</h4><p>Cuidado del planeta y de las personas, más allá de la venta.</p></div>
+      <div class="pilar-card"><h4>Simpleza</h4><p>Volver a lo simple — alimentos reales para una vida real.</p></div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ PÁGINA: CAFÉ / VISITANOS (landing propia) ============ -->
+<div class="page" id="page-visitanos">
+  <section class="hero" style="min-height:60vh;">
+    <span class="tag">☕ Coffee Hub</span>
+    <h1>Un lugar para encontrarte con vos y con los tuyos.</h1>
+    <p>Café de especialidad y pastelería libre de gluten, en un espacio pensado para quedarte, no solo para llevar algo y listo.</p>
+    <div class="hero-ctas">
+      <button class="btn-primary" onclick="goTo('comprar')">Pedí Online</button>
+      <a href="#ubic-visitanos" class="btn-secondary">Ver ubicaciones</a>
+    </div>
+    <div class="stickers">
+      <span class="sticker">LIBRE DE GLUTEN</span>
+      <span class="sticker">LIBRE DE AZÚCAR</span>
+      <span class="sticker">LIBRE DE CONSERVANTES</span>
+      <span class="sticker">MENDOZA</span>
+    </div>
+  </section>
+  <section class="cafe-page-body reveal">
+    <span class="eyebrow">Qué vas a encontrar</span>
+    <h2 class="section-title">La experiencia completa</h2>
+    <div class="cafe-grid">
+      <div class="cafe-card"><div class="icon">☕</div><h3>Café de especialidad</h3><p>De grano seleccionado, para quienes ya saben lo que quieren y para quienes recién están descubriendo.</p></div>
+      <div class="cafe-card"><div class="icon">🥐</div><h3>Pastelería libre de gluten</h3><p>Alfajores, tortas, budines y más — hechos para que nadie tenga que resignar sabor.</p></div>
+      <div class="cafe-card"><div class="icon">🤗</div><h3>Comunidad real</h3><p>Un espacio para quedarte, trabajar, charlar — no solo para llevar algo y listo.</p></div>
+    </div>
+    <div class="tag-row"><span class="tag-pill">Libre de gluten</span><span class="tag-pill">Libre de azúcar</span><span class="tag-pill">Wifi</span></div>
+  </section>
+
+  <section class="cafe-galeria reveal">
+    <span class="eyebrow">Conocé el espacio</span>
+    <h2 class="section-title">Un lugar que también entra por los ojos</h2>
+    <div class="galeria-grid">
+      <div class="video-slot" style="margin-top:0;">
+        <div class="icon">🌿</div>
+        <h4>Espacio para foto/video — Patio exterior con canal de agua</h4>
+        <p>El verde y el canal de agua son un diferencial real frente a cualquier otra cafetería — merece ser lo primero que se vea, no un dato al pie.</p>
+      </div>
+      <div class="galeria-col">
+        <div class="video-slot" style="margin-top:0;">
+          <div class="icon">🏠</div>
+          <h4>Espacio para foto — Interior</h4>
+          <p>La estética del salón, la barra, el detalle del diseño.</p>
+        </div>
+        <div class="video-slot" style="margin-top:0;">
+          <div class="icon">🥐</div>
+          <h4>Espacio para foto — Producto en mesa</h4>
+          <p>Algo del menú, servido, con buena luz.</p>
+        </div>
+      </div>
+    </div>
+    <a href="https://share.google/zSVzaLZ6dsVCU7uOG" target="_blank" class="trust-badge" style="text-decoration:none; cursor:pointer; background:white; margin-top:2rem; max-width:420px; margin-left:auto; margin-right:auto;">
+      <div class="stars">★★★★★</div>
+      <div class="txt" style="color:#5c4a3a;"><b style="color:var(--marron);">4.9 / 5</b>en Google, con reseñas reales de quienes ya nos visitaron.</div>
+    </a>
+  </section>
+
+  <section class="reveal">
+    <span class="eyebrow">Para qué venir</span>
+    <h2 class="section-title">Un espacio, varios motivos</h2>
+    <div class="ocasiones-grid">
+      <div class="ocasion-card"><div class="icon">💻</div><h4>Para trabajar</h4><p>Wifi y un ambiente tranquilo para quedarte un rato largo.</p></div>
+      <div class="ocasion-card"><div class="icon">🫂</div><h4>Para juntarte</h4><p>Un lugar cómodo para encontrarte con amigos, sin apuro.</p></div>
+      <div class="ocasion-card"><div class="icon">🥐</div><h4>Para llevar</h4><p>Si tenés poco tiempo, pedís y te lo llevás igual.</p></div>
+    </div>
+  </section>
+  <section class="ubicaciones reveal" id="ubic-visitanos">
+    <span class="eyebrow">Ubicaciones</span>
+    <h2 class="section-title">Encontranos en Mendoza</h2>
+    <div class="ubic-grid">
+      <div class="ubic-card"><h3>📍 Urban Mall / La Puntilla</h3><p>Horarios y mapa a confirmar con el equipo.</p></div>
+      <div class="ubic-card"><h3>📍 Distrito Vistalba Mall</h3><p>Horarios y mapa a confirmar con el equipo.</p></div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ PÁGINA: COMPRÁ ONLINE (landing propia) ============ -->
+<div class="page" id="page-comprar">
+  <section class="comprar">
+    <span class="tag">🛍️ Pedí desde donde estés</span>
+    <h1>¿No podés venir? Pedilo igual.</h1>
+    <p class="lead" style="max-width:48ch; margin:1.3rem auto 0; font-size:1.05rem;">Los mismos productos del mostrador, con la misma materia prima real — para delivery o retiro en el local.</p>
+    <div class="hero-ctas">
+      <a href="#pedir" class="btn-primary" style="background:var(--naranja);">Quiero pedir ahora</a>
+    </div>
+    <div class="tag-row">
+      <span class="tag-pill" style="background:rgba(255,250,248,0.15);">Libre de gluten</span>
+      <span class="tag-pill" style="background:rgba(255,250,248,0.15);">Libre de azúcar</span>
+      <span class="tag-pill" style="background:rgba(255,250,248,0.15);">Libre de conservantes</span>
+    </div>
+  </section>
+
+  <section class="como-funciona reveal">
+    <span class="eyebrow">Cómo funciona</span>
+    <h2 class="section-title">Pedir en 3 pasos, sin vueltas</h2>
+    <div class="pasos-grid">
+      <div class="paso-card"><div class="paso-num">1</div><h3>Elegí tus productos</h3><p>Recorré la carta online, igual que si estuvieras en el mostrador.</p></div>
+      <div class="paso-card"><div class="paso-num">2</div><h3>Pagá fácil</h3><p>Con tu medio de pago habitual, directo desde la tienda.</p></div>
+      <div class="paso-card"><div class="paso-num">3</div><h3>Recibilo o retiralo</h3><p>Delivery a tu casa, o retiro en el local que elijas.</p></div>
+    </div>
+    <div class="video-slot">
+      <div class="icon">🎥</div>
+      <h4>Espacio para video — "Cómo pedir en 30 segundos"</h4>
+      <p>Un video corto mostrando el paso a paso real de la tienda online genera mucha más confianza que texto solo — buen candidato para grabar.</p>
+    </div>
+  </section>
+
+  <section class="storytelling-online reveal">
+    <span class="eyebrow" style="color:var(--naranja);">Por qué pedir online no es "menos"</span>
+    <h2 class="section-title" style="color:var(--crema);">La misma calidad, sin importar cómo llegue a tu mesa</h2>
+    <div class="story-grid">
+      <div>
+        <p>Todo lo que pedís online sale del mismo lugar que lo que se sirve en el local — nuestro propio centro de producción, con la misma materia prima real y el mismo control de calidad en cada lote.</p>
+        <p>No tercerizamos, no bajamos la calidad para "el canal online" — es Bloom, llegue como llegue.</p>
+        <a href="https://share.google/zSVzaLZ6dsVCU7uOG" target="_blank" class="trust-badge" style="text-decoration:none; cursor:pointer;">
+          <div class="stars">★★★★★</div>
+          <div class="txt"><b>4.9 / 5</b>en Google, con reseñas reales de quienes ya nos eligieron.</div>
+        </a>
+      </div>
+      <div class="video-slot" style="background:rgba(255,250,248,0.08); border-color:rgba(255,250,248,0.3); color:var(--coral);">
+        <div class="icon">🎥</div>
+        <h4 style="color:var(--crema);">Espacio para video — Detrás de escena del Food Lab</h4>
+        <p style="color:var(--coral);">Mostrar el centro de producción real refuerza justo el mensaje de esta sección — "es la misma calidad, la veas o no".</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="categorias-teaser reveal">
+    <span class="eyebrow">Qué vas a encontrar</span>
+    <h2 class="section-title">Todo lo del local, en un click</h2>
+    <div class="cat-grid">
+      <div class="cat-card"><div class="icon">🥐</div><h4>Panificados</h4></div>
+      <div class="cat-card"><div class="icon">💪</div><h4>Línea Proteica</h4></div>
+      <div class="cat-card"><div class="icon">🍰</div><h4>Pastelería y Dulces</h4></div>
+      <div class="cat-card"><div class="icon">☕</div><h4>Desayuno y Despensa</h4></div>
+    </div>
+  </section>
+
+  <section class="faq-online reveal">
+    <span class="eyebrow">Antes de pedir</span>
+    <h2 class="section-title">Preguntas frecuentes</h2>
+    <div class="faq-item"><h4>¿En cuánto tiempo llega mi pedido?</h4><p>Todos los pedidos se despachan martes y jueves, y llegan en el día. La franja horaria de entrega se coordina previamente por WhatsApp.</p></div>
+    <div class="faq-item"><h4>¿A qué zonas hacen envíos?</h4><p>Entregamos en todo el Gran Mendoza.</p></div>
+    <div class="faq-item"><h4>¿Puedo retirar en el local?</h4><p>Sí, elegís el local más cercano al completar tu pedido. Suele estar listo entre 3 y 4 horas después de realizado.</p></div>
+    <div class="faq-item"><h4>¿Qué medios de pago aceptan?</h4><p>Tarjetas de débito y crédito, dinero en cuenta de MercadoPago, y efectivo por Rapipago o Pago Fácil.</p></div>
+  </section>
+
+  <section class="comprar-body reveal" id="pedir">
+    <span class="eyebrow">Listo para pedir</span>
+    <h2 class="section-title">Hacé tu pedido</h2>
+    <div class="comprar-grid" style="grid-template-columns:1fr; max-width:520px; margin-left:auto; margin-right:auto;">
+      <div class="comprar-card" style="align-items:center; text-align:center;">
+        <div class="icon">🛍️</div>
+        <h3>Tienda Online Bloom</h3>
+        <p>Pedí directo desde nuestra tienda oficial — delivery o retiro en tu local más cercano, con seguimiento de tu pedido.</p>
+        <a href="#" class="btn-primary">Ir a la Tienda Online</a>
+      </div>
+    </div>
+    <p class="comprar-note">Disponible en Urban Mall y Distrito Vistalba Mall — la tienda te muestra el local más cercano automáticamente.</p>
+  </section>
+</div>
+
+<!-- ============ PÁGINA: MAYORISTA (landing propia) ============ -->
+<div class="page" id="page-mayorista">
+  <section class="mayorista-hero">
+    <span class="tag">🏭 Food Lab</span>
+    <h1 style="color:var(--marron);">Sumá a tu negocio una marca que tus clientes ya están pidiendo.</h1>
+    <p style="color:#5c4a3a; max-width:50ch; margin:1.3rem auto 0; font-size:1.05rem;">Materia prima premium, condiciones claras y reposición sin demoras — desde nuestro centro de producción directo a tu local.</p>
+    <div class="hero-ctas">
+      <a href="#cond-mayorista" class="btn-primary">Ver condiciones</a>
+      <button class="btn-secondary">Pedí tu propuesta mayorista</button>
+    </div>
+    <div class="tag-row">
+      <span class="tag-pill">Libre de gluten</span>
+      <span class="tag-pill">Libre de azúcar</span>
+      <span class="tag-pill">Libre de conservantes</span>
+      <span class="tag-pill">Producción propia</span>
+      <span class="tag-pill">Envío gratis</span>
+    </div>
+  </section>
+
+  <section class="degustacion reveal">
+    <span class="eyebrow">Antes de tu primer pedido</span>
+    <h2 class="section-title">¿Todavía no probaste Bloom? Te la llevamos gratis.</h2>
+    <p class="degustacion-lead">Te acercamos a tu negocio una caja de degustación sin costo — para que pruebes calidad y sabor antes de decidir tu primer pedido.</p>
+    <div class="deg-grid">
+      <div class="deg-card"><div class="icon">☕</div><h4>Café / Gastronomía</h4><p>Un producto dulce, uno salado y uno para hornear — para evaluar encaje en tu carta.</p></div>
+      <div class="deg-card"><div class="icon">💪</div><h4>Fitness</h4><p>Snacks proteicos y prácticos, alineados con el consumo de tus socios.</p></div>
+      <div class="deg-card"><div class="icon">🌱</div><h4>Tienda de Salud</h4><p>Variedad de formatos, pensada para mostrar diferenciación real.</p></div>
+      <div class="deg-card"><div class="icon">🥗</div><h4>Catering</h4><p>Productos salados, prácticos y fáciles de servir en volumen.</p></div>
+      <div class="deg-card"><div class="icon">🏪</div><h4>Distribución</h4><p>Variedad de sabores y formatos fáciles de exhibir y rotar.</p></div>
+    </div>
+    <div class="deg-cta">
+      <p>Contanos qué tipo de negocio tenés y coordinamos la entrega — sin cargo, sin compromiso.</p>
+      <button class="btn-secondary" style="background:var(--crema);">Pedir mi caja de degustación</button>
+    </div>
+  </section>
+  <section class="mayorista-body reveal">
+    <span class="eyebrow">Nuestras líneas</span>
+    <h2 class="section-title">Pensado para tu tipo de negocio</h2>
+    <div class="cat-grid-4">
+      <div class="mayorista-line"><div class="icon">🥟</div><h3>Panificados para Hornear</h3><p>Ideal para cafeterías y locales gastronómicos.</p></div>
+      <div class="mayorista-line"><div class="icon">💪</div><h3>Línea Proteica</h3><p>Ideal para gimnasios y centros de entrenamiento.</p></div>
+      <div class="mayorista-line"><div class="icon">🍰</div><h3>Pastelería y Dulces</h3><p>Ideal para catering, eventos y dietéticas.</p></div>
+      <div class="mayorista-line"><div class="icon">☕</div><h3>Desayuno y Despensa</h3><p>Ideal para revender en góndola o mostrador.</p></div>
+    </div>
+  </section>
+
+  <section class="proceso-mayorista reveal">
+    <span class="eyebrow">Cómo funciona</span>
+    <h2 class="section-title">De la primera consulta a la reposición mensual</h2>
+    <div class="pasos-grid pasos-grid-4">
+      <div class="paso-card"><div class="paso-num">1</div><h3>Nos escribís</h3><p>Por WhatsApp, contanos tu negocio y qué buscás sumar.</p></div>
+      <div class="paso-card"><div class="paso-num">2</div><h3>Coordinamos tu primer pedido</h3><p>Condiciones claras, mínimo combinado de $100.000.</p></div>
+      <div class="paso-card"><div class="paso-num">3</div><h3>Recibís gratis en tu negocio</h3><p>Envío sin costo en todo el Gran Mendoza.</p></div>
+      <div class="paso-card"><div class="paso-num">4</div><h3>Repetís cuando quieras</h3><p>Los siguientes pedidos, directo desde la tienda online.</p></div>
+    </div>
+  </section>
+
+  <section class="diferenciador reveal">
+    <span class="eyebrow" style="color:var(--naranja);">Por qué Bloom y no un distribuidor más</span>
+    <h2 class="section-title" style="color:var(--crema);">Somos quienes lo producen, no quienes lo revenden</h2>
+    <div class="story-grid">
+      <div>
+        <p>A diferencia de un distribuidor que arma su catálogo con productos de terceros, en Bloom todo sale de nuestro propio centro de producción — con control de calidad verificable en cada lote, de punta a punta.</p>
+        <p>Eso significa consistencia real: el mismo producto, el mismo sabor, la misma calidad, pedido tras pedido — no depende de a quién le compró el distribuidor esta vez.</p>
+      </div>
+      <div class="video-slot" style="background:rgba(255,250,248,0.08); border-color:rgba(255,250,248,0.3); color:var(--coral);">
+        <div class="icon">🎥</div>
+        <h4 style="color:var(--crema);">Espacio para video — Nuestro centro de producción</h4>
+        <p style="color:var(--coral);">El mismo video que en Comprá Online puede reutilizarse acá — el mensaje de fondo es el mismo: control de calidad real, mostrado, no solo dicho.</p>
+      </div>
+    </div>
+    <div class="loyalty-teaser">
+      <div class="icon">🎁</div>
+      <div>
+        <h4>Premiamos la fidelidad</h4>
+        <p>Los negocios que sostienen su reposición mes a mes acceden a beneficios exclusivos — contanos tu caso cuando nos escribas.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq-online reveal">
+    <span class="eyebrow">Antes de escribirnos</span>
+    <h2 class="section-title">Preguntas frecuentes</h2>
+    <div class="faq-item"><h4>¿Cuál es el pedido mínimo?</h4><p>$100.000 por pedido, combinando los productos que quieras.</p></div>
+    <div class="faq-item"><h4>¿Hacen envíos?</h4><p>Sí, gratis en todo el Gran Mendoza.</p></div>
+    <div class="faq-item"><h4>¿Puedo revender con mi propia marca?</h4><p>No — se revende con el packaging y la marca Bloom visibles.</p></div>
+    <div class="faq-item"><h4>¿Y si mi pedido no llega al mínimo?</h4><p>Se puede combinar productos de distintas líneas para alcanzarlo — no hay mínimo por producto individual.</p></div>
+  </section>
+
+  <section id="cond-mayorista" style="background:var(--durazno);" class="reveal">
+    <span class="pending-badge">🚧 Diseño final a definir por el estudio</span>
+    <span class="eyebrow">Condiciones</span>
+    <h2 class="section-title">Cómo comprar</h2>
+    <div class="cond-grid">
+      <div class="cond-item"><b>Mínimo de compra</b><span>$100.000 por pedido, combinando productos libremente.</span></div>
+      <div class="cond-item"><b>Zona de entrega</b><span>Gran Mendoza — envío gratis.</span></div>
+      <div class="cond-item"><b>Marca y packaging</b><span>Se revende con packaging y marca Bloom visibles.</span></div>
+      <div class="cond-item"><b>Cómo pedir</b><span>Primer pedido por WhatsApp, siguientes por tienda online.</span></div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ PÁGINA: BOXES MENSUALES (landing propia) ============ -->
+<div class="page" id="page-boxes">
+  <section class="boxes-hero">
+    <span class="tag">Suscripción Mensual</span>
+    <h1 style="color:var(--marron);">Tus favoritos Bloom, todos los meses.</h1>
+    <p style="color:#5c4a3a; max-width:50ch; margin:1.3rem auto 0; font-size:1.05rem;">Una selección pensada para vos — sin tener que volver a elegir desde cero cada mes.</p>
+    <div class="hero-ctas">
+      <a href="#elegir-box" class="btn-primary" style="background:var(--naranja); color:var(--marron);">Suscribirme ahora</a>
+    </div>
+    <div class="tag-row">
+      <span class="tag-pill">Libre de gluten</span>
+      <span class="tag-pill">Libre de azúcar</span>
+      <span class="tag-pill">Libre de conservantes</span>
+    </div>
+    <a href="https://share.google/zSVzaLZ6dsVCU7uOG" target="_blank" class="trust-badge" style="text-decoration:none; cursor:pointer; background:white; margin:1.6rem auto 0; max-width:340px;">
+      <div class="stars">★★★★★</div>
+      <div class="txt" style="color:#5c4a3a;"><b style="color:var(--marron);">4.9 / 5</b>en Google</div>
+    </a>
+  </section>
+
+  <section class="reveal">
+    <span class="eyebrow">Por qué suscribirte</span>
+    <h2 class="section-title">Más simple que comprar cada cosa por separado</h2>
+    <div class="valor-grid">
+      <div class="valor-card"><div class="icon">🎯</div><h4>Selección</h4><p>Una combinación ya pensada para tu forma de comer, no productos al azar.</p></div>
+      <div class="valor-card"><div class="icon">🔄</div><h4>Continuidad</h4><p>Llega solo, todos los meses — no tenés que acordarte de pedir.</p></div>
+      <div class="valor-card"><div class="icon">🎁</div><h4>Beneficio</h4><p>Una ventaja real frente a comprar todo por separado.</p></div>
+    </div>
+  </section>
+
+  <section id="elegir-box" style="background:var(--durazno);" class="reveal">
+    <span class="eyebrow">Elegí tu Box</span>
+    <h2 class="section-title">7 formatos para elegir</h2>
+    <div class="boxes-grid">
+      <div class="box-card">
+        <div class="icon">🌸</div>
+        <h3>Box Bloom</h3>
+        <p>General y equilibrado — la puerta de entrada si no sabés por cuál arrancar.</p>
+        <span class="precio">$58.200/mes</span>
+        <span class="ahorro">Ahorro estimado ~5,5% vs. comprar por separado*</span>
+        <a href="#" class="btn-primary">Suscribirme</a>
+        <div class="incluye"><b>Incluye</b>Budín Carrot · Alfajor Patagónico · Chocotorta · Pizzetas · Pan de Chipa · Yogurt Griego + Granola</div>
+      </div>
+      <div class="box-card">
+        <div class="icon">🏃</div>
+        <h3>Box Proteico / Fitness</h3>
+        <p>Alto en proteína, pensado para sostener un estilo de vida activo.</p>
+        <span class="precio">$68.000/mes</span>
+        <span class="ahorro">Ahorro estimado ~5,1% vs. comprar por separado*</span>
+        <a href="#" class="btn-primary">Suscribirme</a>
+        <div class="incluye"><b>Incluye</b>Pan Ultra Proteico · Budín Proteico Banana · Truffas Proteícas · Yogurt Griego · Snickers · Granola Energética</div>
+      </div>
+      <div class="box-card">
+        <div class="icon">☕</div>
+        <h3>Box Desayunos & Meriendas</h3>
+        <p>Para arrancar el día o cortar la tarde, sin pensarlo cada vez.</p>
+        <span class="precio">$69.500/mes</span>
+        <span class="ahorro">Ahorro estimado ~5,0% vs. comprar por separado*</span>
+        <a href="#" class="btn-primary">Suscribirme</a>
+        <div class="incluye"><b>Incluye</b>Yogurt Griego · Granola Keto · Budín Carrot · Mermelada Frutos Rojos · Tortitas Raspadas</div>
+      </div>
+      <div class="box-card">
+        <div class="icon">❄️</div>
+        <h3>Box Práctico / Freezer</h3>
+        <p>Listo para guardar — soluciones rápidas para los días con poco tiempo.</p>
+        <span class="precio">$66.500/mes</span>
+        <span class="ahorro">Ahorro estimado ~5,3% vs. comprar por separado*</span>
+        <a href="#" class="btn-primary">Suscribirme</a>
+        <div class="incluye"><b>Incluye</b>Pizzetas · Empanadas Cebolla y Hongos · Empanadas Queso y Orégano · Chipachitos · Tortitas Raspadas · Pan de Chipa</div>
+      </div>
+      <div class="box-card">
+        <div class="icon">🍫</div>
+        <h3>Box Dulce Bloom</h3>
+        <p>Para quienes no negocian el postre — dulce, sin resignar nada.</p>
+        <span class="precio">$66.400/mes</span>
+        <span class="ahorro">Ahorro estimado ~5,1% vs. comprar por separado*</span>
+        <a href="#" class="btn-primary">Suscribirme</a>
+        <div class="incluye"><b>Incluye</b>Budín 80% Cacao · Alfajor 80% Cacao · Alfajor Pistacho · Chocotorta · Conitos · Tableta 80% · Snickers</div>
+      </div>
+      <div class="box-card">
+        <div class="icon">🧁</div>
+        <h3>Box Keto</h3>
+        <p>Bajo en carbohidratos, alto en grasas buenas — sin resignar variedad.</p>
+        <a href="#" class="btn-primary">Suscribirme</a>
+        <div class="incluye"><b>Incluye</b>Granola Keto · Alfajor Pistacho · Cheesecake Proteico · Snickers · Tortitas Raspadas · Budín Carrot</div>
+      </div>
+      <div class="box-card">
+        <div class="icon">🌎</div>
+        <h3>Box Paleo</h3>
+        <p>Ingredientes reales, sin procesados — la base de siempre.</p>
+        <a href="#" class="btn-primary">Suscribirme</a>
+        <div class="incluye"><b>Incluye</b>Dátiles de Nuez · Tableta 80% · Mermelada Frutos Rojos · + 2 tortas nuevas</div>
+      </div>
+    </div>
+    <p style="font-size:0.78rem; color:#8a7360; text-align:center; margin-top:1.6rem;">*Precios y ahorro sugeridos, sujetos a validación final de margen antes del lanzamiento. Box Keto y Box Paleo: precio de suscripción todavía sin cargar en Notion.</p>
+  </section>
+
+  <section class="reveal">
+    <div class="waitlist-cta">
+      <h3>¿Todavía no elegiste tu Box?</h3>
+      <p>Escribinos y te ayudamos a encontrar el que mejor va con vos.</p>
+      <button class="btn-secondary" style="background:var(--crema);">Hablar con Bloom</button>
+    </div>
+  </section>
+</div>
+
+<footer>Bloom Coffee Hub · Prototipo navegable multi-página — colores/tipografías reales (Vantablack Studio), diseño gráfico final a cargo del estudio contratado</footer>
+
+<script>
+  const urls = { home: 'bloom.com.ar/', nosotros: 'bloom.com.ar/nosotros', visitanos: 'bloom.com.ar/visitanos', comprar: 'bloom.com.ar/comprar-online', boxes: 'bloom.com.ar/boxes', mayorista: 'bloom.com.ar/mayorista' };
+  function goTo(id){
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    document.querySelectorAll('.navlinks button').forEach(b => b.classList.remove('active'));
+    const navBtn = document.querySelector('[data-nav="' + id + '"]');
+    if (navBtn) navBtn.classList.add('active');
+    document.getElementById('fakeUrl').textContent = urls[id] || urls.home;
+    window.scrollTo({top:0, behavior:'instant'});
+  }
+  function toggleMobileMenu(){
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in'); });
+  }, {threshold:0.1});
+  revealEls.forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>
