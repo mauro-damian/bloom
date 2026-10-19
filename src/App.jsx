@@ -8,7 +8,6 @@ import Nosotros from './pages/Nosotros';
 import Cafe from './pages/Cafe';
 import CompraOnline from './pages/CompraOnline';
 import Mayorista from './pages/Mayorista';
-import Boxes from './pages/Boxes';
 import Contacto from './pages/Contacto';
 
 export default function App() {
@@ -37,7 +36,7 @@ export default function App() {
     <Route path="/cafe" element={<Cafe />} />
     <Route path="/compra-online" element={<CompraOnline />} />
     <Route path="/mayorista" element={<Mayorista />} />
-    <Route path="/boxes" element={<Boxes />} />
+    <Route path="/boxes" element={<Navigate to="/compra-online" replace />} />
     <Route path="/contacto" element={<Contacto />} />
     <Route path="*" element={<Navigate to="/" replace />} />
   </Routes></main><Footer /></>;

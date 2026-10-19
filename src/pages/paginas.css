@@ -410,3 +410,5 @@
   .product-showcase h3 { font-size: clamp(1.35rem, 5.7vw, 2rem); }
   .product-showcase p { font-size: .82rem; margin-top: 12px; }
 }
+
+.contact-minimum { font-size: .9rem; font-weight: 700; margin: 0 0 24px; }

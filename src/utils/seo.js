@@ -6,12 +6,12 @@ const paginas = {
   '/cafe': contenido.cafe,
   '/compra-online': contenido.online,
   '/mayorista': contenido.mayorista,
-  '/boxes': contenido.boxes,
   '/contacto': contenido.contactoPagina,
 };
 
 export function seoParaRuta(pathname) {
-  const ruta = pathname.replace(/\/+$/, '') || '/';
+  const solicitada = pathname.replace(/\/+$/, '') || '/';
+  const ruta = solicitada === '/boxes' ? '/compra-online' : solicitada;
   const pagina = paginas[ruta] || paginas['/'];
   const imagen = pagina.foto?.src || contenido.home.hero.foto.src;
   const dominio = contenido.marca.url;

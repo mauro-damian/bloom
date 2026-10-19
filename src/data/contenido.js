@@ -38,19 +38,18 @@ const navegacion = [
   { label: 'Café', to: '/cafe' },
   { label: 'Comprá online', to: '/compra-online' },
   { label: 'Mayorista', to: '/mayorista' },
-  { label: 'Boxes', to: '/boxes' },
   { label: 'Contacto', to: '/contacto' },
 ];
 
 export const contenido = {
   marca: {
     nombre: 'Bloom',
-    cafe: 'Bloom Coffee Hub',
+    cafe: 'Bloom · Coffee Hub',
     produccion: 'Bloom Food Lab',
-    lema: 'No Drama Club',
+    lema: 'Alimentación consciente',
     ubicacion: 'Mendoza, Argentina',
-    propuesta: 'Alimentos libres de gluten, azúcar y conservantes.',
-    sello: 'LIBRE DE GLUTEN, AZÚCAR Y CONSERVANTES · ',
+    propuesta: 'Alimentos libres de gluten, azúcares y conservantes.',
+    sello: 'LIBRE DE GLUTEN · AZÚCARES · CONSERVANTES · ',
     logo: null,
     url: '',
   },
@@ -90,16 +89,16 @@ export const contenido = {
   navegacion,
   home: {
     seo: {
-      titulo: 'Bloom · Alimentación consciente | Food Lab & Coffee Hub',
-      descripcion: 'Café y Food Lab en Mendoza. Alimentos libres de gluten, azúcar y conservantes, elaborados en nuestro propio centro de producción.',
+      titulo: 'Bloom · Coffee Hub | Alimentación consciente en Mendoza',
+      descripcion: 'Cafetería de especialidad y comida Paleo-Keto en Mendoza. Alimentación consciente, libre de gluten, azúcares y conservantes.',
     },
     hero: {
-      eyebrow: 'Bloom Food Lab · Centro de producción · Mendoza',
+      eyebrow: 'Bloom · Coffee Hub · Mendoza',
       titulo: [
         { t: 'Alimentación', peso: 'fuerte' },
         { t: 'consciente.', peso: 'italica' },
       ],
-      descripcion: 'Elaboramos alimentos en nuestro propio centro de producción. Para tu casa, tu negocio y nuestra mesa de café.',
+      descripcion: 'Comida Paleo-Keto y café de especialidad. Para disfrutar acá, llevar a casa o sumar a tu negocio.',
       foto: pistacho,
       ctaPrincipal: { label: 'Comprá online', tipo: 'tienda' },
       ctaSecundaria: { label: 'o visitanos', to: '/cafe' },
@@ -107,7 +106,7 @@ export const contenido = {
     foodLab: { eyebrow: 'Producción propia', titulo: 'Bloom Food Lab.', texto: 'Nuestro centro de producción en Mendoza. Elegimos los ingredientes, desarrollamos las recetas y elaboramos los productos que llegan a tu casa, a otros negocios y a nuestro café.' },
     pilares: [
       'Libre de gluten',
-      'Libre de azúcar',
+      'Libre de azúcares',
       'Libre de conservantes',
       'Keto',
       'Paleo',
@@ -198,7 +197,7 @@ export const contenido = {
     caminos: [
       {
         id: 'cafe',
-        eyebrow: 'No Drama Club · Coffee Hub',
+        eyebrow: 'Bloom · Coffee Hub',
         titulo: 'Vení al café.',
         descripcion: 'Viví la experiencia completa con amigos, en familia, en pareja o con un rato para vos.',
         foto: patioCafe,
@@ -279,7 +278,7 @@ export const contenido = {
     eyebrow: '01 / Nuestra historia',
     titulo: [{ t: 'Bloom nació de', peso: 'fuerte' }, { t: 'una necesidad,', peso: 'italica' }, { t: 'no de una idea de negocio.', peso: 'fuerte' }],
     historia: [
-      'Anahí no encontraba dónde comer rico, libre de gluten y de azúcar. Bloom nació de esa búsqueda personal y de las ganas de que elegir qué comer fuera más simple.',
+      'Anahí no encontraba dónde comer rico, libre de gluten y de azúcares. Bloom nació de esa búsqueda personal y de las ganas de que elegir qué comer fuera más simple.',
       'Hoy esa idea tiene una cocina propia y un lugar en Mendoza. Hacemos alimentos reales para el café, para llevar a casa y para sumar a otros negocios.',
     ],
     foto: null,
@@ -305,15 +304,14 @@ export const contenido = {
     subtitulosLabel: 'Español',
   },
   cafe: {
-    seo: { titulo: 'No Drama Club · Coffee Hub de Bloom en Mendoza', descripcion: 'Café de especialidad, algo rico y tiempo para disfrutar. Conocé No Drama Club, el Coffee Hub de Bloom en Urban Mall y Distrito Vistalba Mall.' },
-    eyebrow: 'Coffee Hub de Bloom · Mendoza',
-    nombre: 'No Drama Club',
+    seo: { titulo: 'Bloom · Coffee Hub | Café de especialidad en Mendoza', descripcion: 'Café de especialidad, algo rico y tiempo para disfrutar. Visitá Bloom en Urban Mall y Distrito Vistalba Mall, Mendoza.' },
+    eyebrow: 'Bloom · Coffee Hub · Mendoza',
     titulo: [{ t: 'Vení al café.', peso: 'fuerte' }, { t: 'Quedate un rato.', peso: 'italica' }],
     descripcion: 'Café de especialidad y algo rico para acompañar. Con amigos, en familia o con un momento para vos.',
     cta: 'Encontrá tu café',
     patio: patioCafe,
     motivosTitulo: 'Tu momento, a tu ritmo.',
-    motivosEyebrow: 'La experiencia No Drama Club',
+    motivosEyebrow: 'La experiencia Bloom',
     motivos: [
       { titulo: 'Café de especialidad.', texto: 'El café tiene su tiempo. Vos también: vení a disfrutarlo.' },
       { titulo: 'Disfrutamos la compañía.', texto: 'Con amigos, en familia, en pareja o a solas. Hay un lugar para vos.' },
@@ -332,7 +330,7 @@ export const contenido = {
     },
     cierre: {
       titulo: 'Vení al café.',
-      texto: 'Un café y tiempo para disfrutar. Te esperamos en No Drama Club.',
+      texto: 'Un café y tiempo para disfrutar. Te esperamos en Bloom.',
       cta: 'Hablemos de tu visita',
     },
   },
@@ -377,9 +375,9 @@ export const contenido = {
   },
   mayorista: {
     seo: { titulo: 'Mayorista · Sumá Bloom a tu negocio', descripcion: 'Alimentos Bloom para cafeterías, gimnasios, dietéticas, catering y distribuidores. Compra mayorista y entregas sin cargo en Gran Mendoza.' },
-    eyebrow: 'Bloom Food Lab · Mayorista',
+    eyebrow: 'Bloom · Mayorista',
     titulo: [{ t: 'Sumá Bloom', peso: 'fuerte' }, { t: 'a tu negocio.', peso: 'italica' }],
-    descripcion: 'Alimentos libres de gluten, azúcar y conservantes. De nuestra cocina al mostrador de tu negocio.',
+    descripcion: 'Alimentos libres de gluten, azúcares y conservantes. De nuestra cocina al mostrador de tu negocio.',
     cta: 'Hablemos de tu negocio',
     foto: foto('heladera-alfajores-etiquetas', 'Alfajores con packaging y etiquetas de Bloom en la heladera exhibidora.', 1500, 2000),
     lineas: { eyebrow: 'Nuestra producción, tu propuesta', titulo: 'Para tu tipo de negocio.', items: [
@@ -421,17 +419,17 @@ export const contenido = {
   contactoPagina: {
     seo: { titulo: 'Contacto · Hablemos | Bloom', descripcion: 'Contactá a Bloom por WhatsApp para pedidos, consultas o compra mayorista. Encontranos en Instagram y en nuestros locales de Mendoza.' },
     titulo: 'Hablemos.',
-    clientes: { eyebrow: 'Bloom para vos', titulo: 'Soy cliente.', texto: 'Para hacer un pedido, consultar por un producto o elegir tu box. Escribinos.', cta: 'Hablá con Bloom', mensaje: 'general' },
-    negocios: { eyebrow: 'Bloom para tu negocio', titulo: 'Tengo un negocio.', texto: 'Para comprar al por mayor. Contanos qué estás buscando.', cta: 'Consultá por mayorista', mensaje: 'mayorista' },
+    clientes: { eyebrow: 'Bloom para vos', titulo: 'Soy cliente.', texto: 'Para hacer un pedido o consultar por un producto. Escribinos.', condicion: 'Pedidos particulares desde $30.000.', cta: 'Hablá con Bloom', mensaje: 'general' },
+    negocios: { eyebrow: 'Bloom para tu negocio', titulo: 'Tengo un negocio.', texto: 'Para comprar al por mayor. Contanos qué estás buscando.', condicion: 'Pedidos mayoristas desde $100.000.', cta: 'Consultá por mayorista', mensaje: 'mayorista' },
     instagram: { eyebrow: 'El día a día de Bloom', titulo: 'Seguimos la charla por acá.', cta: 'Encontranos en Instagram' },
   },
   footer: {
-    descripcion: 'Coffee Hub & Food Lab. Mendoza, Argentina.',
+    descripcion: 'Comida Paleo-Keto y cafetería de especialidad.',
     navegacionTitulo: 'Por acá',
     contactoTitulo: 'Sigamos en contacto',
     instagramLabel: 'Instagram',
     whatsappLabel: 'WhatsApp',
-    firma: 'Bloom · No Drama Club',
+    firma: 'Bloom · Alimentación consciente · Mendoza',
   },
   ui: {
     saltarContenido: 'Saltar al contenido',

@@ -34,7 +34,6 @@ export default function Home() {
       {camino.id === 'online' && <svg className="pathway-star" viewBox="0 0 100 100" fill="none" aria-hidden="true"><path d="M50 3v94M3 50h94M17 17l66 66M17 83l66-66" stroke="currentColor" strokeWidth="1"/></svg>}
     </article>)}</div></section>
 
-    <section className="origin" aria-labelledby="origin-title"><div className="origin-word" aria-hidden="true">{home.origen.palabra}</div><div className="origin-copy"><p className="eyebrow">{home.origen.eyebrow}</p><h2 id="origin-title">{home.origen.titulo}</h2><p>{home.origen.descripcion}</p><Link className="text-link" to={home.origen.cta.to}>{home.origen.cta.label}<Arrow /></Link></div><span className="origin-annotation" aria-hidden="true">{home.origen.anotacion}<svg viewBox="0 0 210 24" fill="none"><path d="M3 15c49-9 133-13 203-9M9 22c50-7 137-6 185-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg></span>{home.origen.foto && <Foto foto={home.origen.foto} className="origin-photo" sizes="180px" />}</section>
 
     <Locales />
 

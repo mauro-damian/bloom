@@ -12,7 +12,6 @@ export default function Cafe() {
       {datos.patio && <Foto foto={datos.patio} priority className="cafe-hero-background" />}
       <div className="cafe-hero-copy">
         <p className="eyebrow">{datos.eyebrow}</p>
-        <p className="club-label">{datos.nombre}</p>
         <TituloMixto partes={datos.titulo} />
         <p className="page-lead">{datos.descripcion}</p>
         <Button component="a" href="#locales" variant="contained" endIcon={<Arrow />}>{datos.cta}</Button>

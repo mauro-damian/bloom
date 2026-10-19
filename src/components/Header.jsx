@@ -31,7 +31,7 @@ export default function Header() {
       <div className="mobile-menu-top"><span className="logo-text">{contenido.marca.nombre}</span><IconButton ref={closeButton} autoFocus aria-label={contenido.ui.cerrarMenu} onClick={() => setOpen(false)}><svg viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="m5 5 16 16M21 5 5 21" stroke="currentColor" strokeWidth="1.5" /></svg></IconButton></div>
       <h2 id="menu-title" className="sr-only">{contenido.ui.navegacionPrincipal}</h2>
       <nav id="mobile-menu" aria-label={contenido.ui.navegacionPrincipal}>{contenido.navegacion.map((item, i) => <NavLink key={item.to} to={item.to} end={item.to === '/'} onClick={() => { setNavigating(item.to !== pathname); setOpen(false); }}><span className="menu-number">{String(i + 1).padStart(2, '0')}</span>{item.label}<Arrow diagonal /></NavLink>)}</nav>
-      <p className="eyebrow">{contenido.marca.lema} · {contenido.marca.ubicacion}</p>
+      <p className="eyebrow">{contenido.marca.cafe} · {contenido.marca.ubicacion}</p>
     </Dialog>
   </>;
 }
