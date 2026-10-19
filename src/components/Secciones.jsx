@@ -14,12 +14,12 @@ export function MediaPendiente({ foto, pendiente, className = '', priority = fal
   </div>;
 }
 
-export function Pasos({ datos, className = '' }) {
+export function Pasos({ datos, className = '', editorial = false }) {
   const id = useId();
   return <section className={`steps-section section-padding ${className}`} aria-labelledby={id}>
     <div className="section-heading"><p className="eyebrow">{datos.eyebrow}</p><h2 id={id}>{datos.titulo}</h2></div>
-    <ol className={`steps-list steps-${datos.items.length}`}>{datos.items.map((paso, i) => <li className="step-circle" key={paso.titulo}>
-      <span className="step-number" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span><h3>{paso.titulo}</h3><p>{paso.texto}</p>
+    <ol className={editorial ? 'editorial-list' : `steps-list steps-${datos.items.length}`}>{datos.items.map((paso, i) => <li className={editorial ? undefined : 'step-circle'} key={paso.titulo}>
+      <span className={editorial ? 'editorial-number' : 'step-number'} aria-hidden="true">{String(i + 1).padStart(2, '0')}</span><h3>{paso.titulo}</h3><p>{paso.texto}</p>
     </li>)}</ol>
   </section>;
 }
@@ -56,7 +56,7 @@ export function FoodLab({ datos, formal = false }) {
 export function Cierre({ datos, tipo = 'whatsapp', mensaje = 'general' }) {
   const id = useId();
   return <CieloGrano className="page-closing section-padding" aria-labelledby={id}>
-    <h2 id={id}>{datos.titulo}</h2><div className="page-closing-copy"><p>{datos.texto}</p><div className="closing-actions">
+    <h2 id={id}>{datos.titulo}</h2><div className="page-closing-copy"><p>{datos.texto}</p>{datos.condicion && <p className="purchase-minimum">{datos.condicion}</p>}<div className="closing-actions">
       {tipo === 'link' ? <Button component={Link} to={datos.to} variant="contained" endIcon={<Arrow />}>{datos.label}</Button> : tipo === 'tienda' ? <BotonTienda>{datos.cta}</BotonTienda> : <BotonWhatsApp mensaje={mensaje}>{datos.cta}</BotonWhatsApp>}
       {datos.alternativa && <BotonWhatsApp mensaje={mensaje} variant="outlined">{datos.alternativa}</BotonWhatsApp>}
     </div>{tipo === 'tienda' && !contenido.tienda.url && <p className="shop-notice">{contenido.tienda.pendiente}</p>}</div>

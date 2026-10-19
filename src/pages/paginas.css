@@ -361,3 +361,52 @@
   .cafe-page .club-label { font-size: .73rem; margin: 16px 0 20px; }
   .cafe-specialty-copy, .cafe-events { grid-template-columns: 1fr; gap: 28px; }
 }
+
+.online-delivery { background: var(--cieloClaro); }
+.online-delivery-copy { max-width: 780px; }
+.online-delivery h2 { max-width: 18ch; margin: 24px 0; }
+.online-delivery-copy > p:last-child { max-width: 46ch; }
+.online-delivery.has-media { display: grid; grid-template-columns: 1.1fr 1fr; align-items: center; gap: 6vw; }
+.online-delivery-media { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+@media (max-width: 899px) {
+  .online-delivery.has-media { grid-template-columns: 1fr; gap: 32px; }
+}
+
+.wholesale-feature { background: var(--cieloClaro); }
+.wholesale-feature h2 { max-width: 18ch; margin: 24px 0; }
+.wholesale-feature p:last-child { max-width: 46ch; }
+.wholesale-feature.has-media { display: grid; grid-template-columns: 1.1fr 1fr; align-items: center; gap: 6vw; }
+.wholesale-feature > img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.wholesale-process-editorial .section-heading h2 { max-width: 20ch; }
+@media (max-width: 899px) {
+  .wholesale-feature.has-media { grid-template-columns: 1fr; gap: 32px; }
+}
+
+/* Productos mayoristas: fotos orgánicas con espacio para cada línea. */
+.product-showcase { gap: 48px 5vw; padding-top: 12px; }
+.product-showcase article { position: relative; grid-template-columns: 1fr minmax(150px, 46%); gap: 24px; border: 0; padding: 18px 0; }
+.product-showcase .editorial-number { position: absolute; top: 0; left: 0; font-size: .8rem; letter-spacing: .12em; margin: 0; }
+.product-showcase article > div { padding-top: 18px; }
+.product-showcase h3 { font-size: clamp(1.65rem, 2.6vw, 2.65rem); line-height: 1.06; }
+.product-showcase p { max-width: 25ch; font-size: .9rem; line-height: 1.6; margin-top: 16px; }
+.product-showcase img { width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; border-radius: 43% 57% 59% 41% / 55% 40% 60% 45%; transform: rotate(-5deg); box-shadow: 8px 10px 0 var(--durazno); }
+.product-showcase article:nth-child(2n) img { border-radius: 58% 42% 40% 60% / 43% 57% 43% 57%; transform: rotate(5deg); box-shadow: -8px 10px 0 var(--cielo); }
+.product-showcase article:nth-child(3) img { border-radius: 50%; box-shadow: 8px 10px 0 var(--cielo); }
+.product-showcase article:nth-child(4) img { box-shadow: -8px 10px 0 var(--durazno); }
+@media (min-width: 900px) { .product-showcase article:nth-child(even) { margin-top: 30px; } }
+@media (max-width: 899px) {
+  .product-showcase { grid-template-columns: 1fr; gap: 30px; }
+  .product-showcase article { grid-template-columns: 1fr minmax(130px, 35%); gap: 30px; }
+  .product-showcase article:nth-child(even) { grid-template-columns: minmax(130px, 35%) 1fr; }
+  .product-showcase article:nth-child(even) > img { grid-column: 1; grid-row: 1; }
+  .product-showcase article:nth-child(even) > div { grid-column: 2; grid-row: 1; }
+  .product-showcase article:nth-child(even) > .editorial-number { left: calc(35% + 30px); }
+}
+@media (max-width: 599px) {
+  .product-showcase { gap: 22px; }
+  .product-showcase article { grid-template-columns: 1fr 40%; gap: 20px; }
+  .product-showcase article:nth-child(even) { grid-template-columns: 40% 1fr; }
+  .product-showcase article:nth-child(even) > .editorial-number { left: calc(40% + 20px); }
+  .product-showcase h3 { font-size: clamp(1.35rem, 5.7vw, 2rem); }
+  .product-showcase p { font-size: .82rem; margin-top: 12px; }
+}
