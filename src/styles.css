@@ -314,3 +314,37 @@ main:focus { outline: none; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
   .motion-toggle { display: none; }
 }
+
+/* V3: producción al frente, experiencia de café como un mundo propio. */
+.hero-v2 h1 { font-size: clamp(3rem, 7.6vw, 7.8rem); }
+.hero-v2 .mixed-title > span { max-width: none; }
+.hero-v2 .mixed-title em { font-size: clamp(2.8rem, 6.6vw, 6.5rem); max-width: none; }
+.product-category { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-top: 14px; text-align: center; }
+.product-category .line-icon, .product-category > strong { font: 800 clamp(1.4rem, 2.1vw, 2.4rem)/1.1 var(--display); text-transform: uppercase; letter-spacing: 0; }
+.product-category .line-icon svg { width: 42px; height: 42px; }
+.product-end .product-weight { font-size: .85rem; margin: 10px 0 20px; }
+.location-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.location-status { display: inline-block; margin-bottom: 16px; padding: 5px 10px; border: 1px solid currentColor; font-size: .65rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+.purchase-minimum { font-size: .82rem; font-weight: 700; margin-top: 18px; }
+.closing-copy .purchase-minimum { font-size: .82rem; margin-bottom: 24px; }
+@media (max-width: 1000px) {
+  .location-list { grid-template-columns: 1fr; }
+  .location, .location + .location { border-left: 0; padding: 30px 0; }
+  .location + .location { border-top: 1px solid var(--marron); }
+}
+@media (max-width: 599px) {
+  .hero-v2 h1 { font-size: clamp(2.5rem, 10.5vw, 4.4rem); }
+  .hero-v2 .mixed-title em { font-size: clamp(2.5rem, 10.5vw, 4.4rem); }
+  .product-category { grid-column: 2; grid-row: 1; margin: 0; }
+  .product-category .line-icon, .product-category > strong { font-size: 1.45rem; }
+  .product-category .line-icon svg { width: 30px; height: 30px; }
+  .product-end .product-weight { margin: 6px 0; }
+}
+
+/* Mapas de locales: se cargan al desplegar la vista previa. */
+.location-info { flex: 1; min-width: 0; }
+.location-number { flex-shrink: 0; }
+.location-map { margin-top: 10px; }
+.location-map .MuiButton-root { text-decoration: underline; text-underline-offset: 4px; }
+.location-map-panel { margin-top: 12px; border: 1px solid var(--marron); overflow: hidden; }
+.location-map-panel iframe { display: block; width: 100%; height: 220px; border: 0; }

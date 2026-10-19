@@ -23,7 +23,6 @@ const sources = [
   ['alfajor-pistacho', 'productos_editados/alfajor-pistacho.jpg'],
   ['alfajor-patagonico', 'productos_editados/alfajor-patagonico.jpg'],
   ['budin-proteico-banana', 'productos_editados/budin-proteico-banana.jpg'],
-  ['vasos-bloom-estante', 'lugar_y_marca/vasos-bloom-estante.jpg'],
   ['heladera-alfajores-etiquetas', 'lugar_y_marca/heladera-alfajores-etiquetas.jpg'],
   ['pizzeta', 'productos_editados/pizzeta.jpg'],
   ['yogurt-griego', 'productos_editados/yogurt-griego.jpg'],

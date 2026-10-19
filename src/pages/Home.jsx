@@ -5,23 +5,26 @@ import { BotonTienda, BotonWhatsApp } from '../components/Botones';
 import { Arrow, CieloGrano, Foto, SelloCircular, Sticker, TituloMixto } from '../components/Marca';
 import BandaProducto from '../components/BandaProducto';
 import Locales from '../components/Locales';
+import { FoodLab } from '../components/Secciones';
 
 export default function Home() {
   const { home, marca, tienda, ui } = contenido;
   const [pausado, setPausado] = useState(false);
   return <>
-    <CieloGrano className="hero">
+    <CieloGrano className="hero hero-v2">
       <div className="hero-copy"><p className="eyebrow hero-eyebrow"><span className="tiny-star" aria-hidden="true">✦</span>{home.hero.eyebrow}</p>
         <TituloMixto partes={home.hero.titulo} />
         <p className="hero-description">{home.hero.descripcion}</p>
         <div className="hero-actions"><BotonTienda>{home.hero.ctaPrincipal.label}</BotonTienda><Link className="text-link" to={home.hero.ctaSecundaria.to}>{home.hero.ctaSecundaria.label}<Arrow /></Link></div>
         {!tienda.url && <p className="shop-notice">{tienda.pendiente}</p>}
       </div>
-      <div className="hero-product"><div className="hero-product-circle"><Foto foto={home.hero.foto} priority sizes="(min-width: 1000px) 45vw, (min-width: 600px) 55vw, 90vw" /></div><SelloCircular className="hero-seal" /><span className="hero-handwriting">{home.hero.anotacion}</span><Sticker className="hero-sticker" /></div>
+      <div className="hero-product"><div className="hero-product-circle"><Foto foto={home.hero.foto} priority sizes="(min-width: 1000px) 45vw, (min-width: 600px) 55vw, 90vw" /></div><SelloCircular className="hero-seal" /><Sticker className="hero-sticker" /></div>
       <div className="hero-bottom"><span>{marca.propuesta}</span><a href="#favoritos" aria-label={ui.productosDestacados}><Arrow className="arrow-down" /></a></div>
     </CieloGrano>
 
     <div className={`pillars ${pausado ? 'is-paused' : ''}`}><p className="sr-only">{home.pilares.join(' · ')}</p><div className="marquee-track" aria-hidden="true">{[0, 1].map(copy => <span className="marquee-group" key={copy}>{home.pilares.map(pilar => <span key={pilar}>{pilar}<i>✦</i></span>)}</span>)}</div><button className="motion-toggle" type="button" onClick={() => setPausado(!pausado)} aria-label={pausado ? ui.reanudarMovimiento : ui.pausarMovimiento}><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">{pausado ? <path d="m6 3 11 7-11 7Z" /> : <path d="M5 3h3v14H5zm7 0h3v14h-3Z" />}</svg></button></div>
+
+    <FoodLab datos={home.foodLab} formal />
 
     <section className="products" id="favoritos" aria-labelledby="products-title"><div className="products-intro"><h2 id="products-title">{ui.productosDestacados}</h2><span aria-hidden="true">01—03</span></div>{home.productos.map(producto => <BandaProducto producto={producto} key={producto.id} />)}</section>
 
@@ -31,10 +34,10 @@ export default function Home() {
       {camino.id === 'online' && <svg className="pathway-star" viewBox="0 0 100 100" fill="none" aria-hidden="true"><path d="M50 3v94M3 50h94M17 17l66 66M17 83l66-66" stroke="currentColor" strokeWidth="1"/></svg>}
     </article>)}</div></section>
 
-    <section className="origin" aria-labelledby="origin-title"><div className="origin-word" aria-hidden="true">{home.origen.palabra}</div><div className="origin-copy"><p className="eyebrow">{home.origen.eyebrow}</p><h2 id="origin-title">{home.origen.titulo}</h2><p>{home.origen.descripcion}</p><Link className="text-link" to={home.origen.cta.to}>{home.origen.cta.label}<Arrow /></Link></div><span className="origin-annotation" aria-hidden="true">{home.origen.anotacion}<svg viewBox="0 0 210 24" fill="none"><path d="M3 15c49-9 133-13 203-9M9 22c50-7 137-6 185-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg></span><Foto foto={home.origen.foto} className="origin-photo" sizes="180px" /></section>
+    <section className="origin" aria-labelledby="origin-title"><div className="origin-word" aria-hidden="true">{home.origen.palabra}</div><div className="origin-copy"><p className="eyebrow">{home.origen.eyebrow}</p><h2 id="origin-title">{home.origen.titulo}</h2><p>{home.origen.descripcion}</p><Link className="text-link" to={home.origen.cta.to}>{home.origen.cta.label}<Arrow /></Link></div><span className="origin-annotation" aria-hidden="true">{home.origen.anotacion}<svg viewBox="0 0 210 24" fill="none"><path d="M3 15c49-9 133-13 203-9M9 22c50-7 137-6 185-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg></span>{home.origen.foto && <Foto foto={home.origen.foto} className="origin-photo" sizes="180px" />}</section>
 
     <Locales />
 
-    <CieloGrano className="closing section-padding" aria-labelledby="closing-title"><div className="closing-copy"><p className="eyebrow">{home.cierre.eyebrow}</p><h2 id="closing-title">{home.cierre.titulo}</h2><p>{home.cierre.descripcion}</p><BotonWhatsApp mensaje={home.cierre.cta.mensaje}>{home.cierre.cta.label}</BotonWhatsApp></div><div className="closing-photo"><Foto foto={home.cierre.foto} sizes="(min-width: 900px) 32vw, 80vw" /><span className="closing-caption">{marca.produccion}</span></div></CieloGrano>
+    <CieloGrano className="closing section-padding" aria-labelledby="closing-title"><div className="closing-copy"><p className="eyebrow">{home.cierre.eyebrow}</p><h2 id="closing-title">{home.cierre.titulo}</h2><p>{home.cierre.descripcion}</p><p className="purchase-minimum">{home.cierre.condicion}</p><BotonWhatsApp mensaje={home.cierre.cta.mensaje}>{home.cierre.cta.label}</BotonWhatsApp></div><div className="closing-photo"><Foto foto={home.cierre.foto} sizes="(min-width: 900px) 32vw, 80vw" /><span className="closing-caption">{marca.produccion}</span></div></CieloGrano>
   </>;
 }

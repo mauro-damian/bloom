@@ -35,9 +35,14 @@ export function Preguntas({ datos }) {
   </section>;
 }
 
-export function FoodLab({ datos }) {
+export function FoodLab({ datos, formal = false }) {
   const id = useId().replaceAll(':', '');
   const media = contenido.foodLab;
+  if (formal) return <section className="foodlab foodlab-home section-padding" aria-labelledby={`lab-${id}`}>
+    <div className="foodlab-copy"><p className="eyebrow">{datos.eyebrow}</p><h2 id={`lab-${id}`}>{datos.titulo}</h2><p>{datos.texto}</p></div>
+    {media.video ? <video className="foodlab-video" controls playsInline preload="none" src={media.video} poster={media.poster || undefined} aria-label={media.titulo}>{media.subtitulos && <track kind="captions" src={media.subtitulos} srcLang="es" label={media.subtitulosLabel} default />}</video> : <MediaPendiente foto={media.foto} pendiente={media.pendiente} sizes="(min-width: 900px) 45vw, 100vw" />}
+  </section>;
+
   return <section className="foodlab section-padding" aria-labelledby={`lab-${id}`}>
     <div className="foodlab-copy"><p className="eyebrow">{datos.eyebrow}</p><h2 id={`lab-${id}`}>{datos.titulo}</h2><p>{datos.texto}</p></div>
     <div className="nube-shell">

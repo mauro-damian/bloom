@@ -177,6 +177,11 @@
   .box-row { grid-template-columns: 50px 1fr 1.2fr; gap: 25px; }
   .box-row .box-cta { grid-column: 3; justify-self: start; }
 }
+
+.foodlab-home { background: var(--durazno); }
+.foodlab-home h2 { font-size: clamp(3rem, 7vw, 7rem); }
+.foodlab-home .media-frame { background: var(--crema); }
+.foodlab-video { width: 100%; aspect-ratio: 4 / 3; }
 @media (max-width: 899px) {
   .page-hero { padding-top: 140px; padding-bottom: 65px; }
   .page-hero .mixed-title { font-size: clamp(3.2rem, 8.5vw, 6rem); }
@@ -328,3 +333,7 @@
   .contact-instagram h2 { font-size: 2.8rem; }
   .instagram-link { font-size: clamp(1.05rem, 5vw, 1.5rem); }
 }
+
+.cafe-reason.without-photo .reason-copy { grid-column: 1 / -1; }
+.cafe-gallery.two-items figure:first-child { grid-row: auto; }
+.cafe-gallery.two-items .media-frame { min-height: 250px; max-height: none; }

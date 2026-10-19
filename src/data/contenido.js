@@ -9,10 +9,28 @@ const foto = (nombre, alt, width = 2210, height = 2576) => ({
   alt,
 });
 
+const fotoIngrediente = (nombre, alt, width = 829, height = 1896) => ({
+  base: `/images/${nombre}`,
+  src: `/images/${nombre}-829.webp`,
+  srcSet: `/images/${nombre}-480.webp 480w, /images/${nombre}-829.webp 829w`,
+  width,
+  height,
+  alt,
+});
+
 const pistacho = foto(
   'alfajor-pistacho',
   'Alfajor de pistacho partido, con su relleno a la vista, sobre fondo verde.',
 );
+
+const patioCafe = {
+  base: '/images/cafe-patio',
+  src: '/images/cafe-patio-876.webp',
+  srcSet: '/images/cafe-patio-480.webp 480w, /images/cafe-patio-876.webp 876w',
+  width: 876,
+  height: 1020,
+  alt: 'Patio exterior y fachada de Bloom Coffee Hub al atardecer, con mesas y sillas.',
+};
 
 const navegacion = [
   { label: 'Inicio', to: '/' },
@@ -71,21 +89,21 @@ export const contenido = {
   navegacion,
   home: {
     seo: {
-      titulo: 'Bloom · Alimentos reales, sin drama',
+      titulo: 'Bloom · Alimentación consciente | Food Lab & Coffee Hub',
       descripcion: 'Café y Food Lab en Mendoza. Alimentos libres de gluten, azúcar y conservantes, elaborados en nuestro propio centro de producción.',
     },
     hero: {
-      eyebrow: 'Coffee Hub & Food Lab · Mendoza',
+      eyebrow: 'Bloom Food Lab · Centro de producción · Mendoza',
       titulo: [
-        { t: 'Alimentos reales.', peso: 'fuerte' },
-        { t: 'sin gluten, sin azúcar, sin drama.', peso: 'italica' },
+        { t: 'Alimentación', peso: 'fuerte' },
+        { t: 'consciente.', peso: 'italica' },
       ],
-      descripcion: 'Hechos en nuestro Food Lab, para acompañarte todos los días.',
+      descripcion: 'Elaboramos alimentos en nuestro propio centro de producción. Para tu casa, tu negocio y nuestra mesa de café.',
       foto: pistacho,
-      anotacion: 'No Drama Club',
       ctaPrincipal: { label: 'Comprá online', tipo: 'tienda' },
       ctaSecundaria: { label: 'o visitanos', to: '/cafe' },
     },
+    foodLab: { eyebrow: 'Producción propia', titulo: 'Bloom Food Lab.', texto: 'Nuestro centro de producción en Mendoza. Elegimos los ingredientes, desarrollamos las recetas y elaboramos los productos que llegan a tu casa, a otros negocios y a nuestro café.' },
     pilares: [
       'Libre de gluten',
       'Libre de azúcar',
@@ -109,7 +127,12 @@ export const contenido = {
         colorTexto: '#3A2418',
         imgProducto: pistacho,
         imgTextura: null,
-        imgIngrediente: null,
+        imgIngrediente: fotoIngrediente(
+          'ingrediente-pistachos',
+          'Pistachos enteros y pelados sobre un fondo verde pistacho.',
+          829,
+          1893,
+        ),
         texturaPendiente: 'FOTO PENDIENTE: crema de pistacho',
         ingredientePendiente: 'FOTO PENDIENTE: pistachos',
         lineas: ['keto'],
@@ -131,7 +154,12 @@ export const contenido = {
           'Alfajor patagónico partido, con relleno de frutos rojos y dulce de leche, sobre fondo magenta.',
         ),
         imgTextura: null,
-        imgIngrediente: null,
+        imgIngrediente: fotoIngrediente(
+          'ingrediente-frutos-rojos',
+          'Frutillas, frambuesas, moras y arándanos sobre un fondo magenta.',
+          829,
+          1886,
+        ),
         texturaPendiente: 'FOTO PENDIENTE: dulce de leche',
         ingredientePendiente: 'FOTO PENDIENTE: frutos rojos',
         lineas: [],
@@ -153,7 +181,12 @@ export const contenido = {
           'Budín proteico de banana cortado, con relleno de dulce de leche, sobre fondo amarillo.',
         ),
         imgTextura: null,
-        imgIngrediente: null,
+        imgIngrediente: fotoIngrediente(
+          'ingrediente-banana',
+          'Bananas enteras, peladas y cortadas sobre un fondo amarillo.',
+          829,
+          1894,
+        ),
         texturaPendiente: 'FOTO PENDIENTE: dulce de leche',
         ingredientePendiente: 'FOTO PENDIENTE: banana',
         lineas: ['proteico'],
@@ -164,11 +197,10 @@ export const contenido = {
     caminos: [
       {
         id: 'cafe',
-        eyebrow: 'Bloom Coffee Hub',
+        eyebrow: 'No Drama Club · Coffee Hub',
         titulo: 'Vení al café.',
-        descripcion: 'Vení a quedarte un rato. O llevátelo, también vale.',
-        foto: null,
-        fotoPendiente: 'FOTO PENDIENTE: patio con canal de agua',
+        descripcion: 'Viví la experiencia completa con amigos, en familia, en pareja o con un rato para vos.',
+        foto: patioCafe,
         cta: { label: 'Conocé el café', to: '/cafe' },
       },
       {
@@ -193,31 +225,37 @@ export const contenido = {
       descripcion: 'Cuando el café molido toca el agua caliente, se hincha y libera su aroma. A ese momento se lo llama bloom. De ahí viene nuestro nombre.',
       anotacion: 'el momento en que el café despierta',
       cta: { label: 'Conocé nuestra historia', to: '/nosotros' },
-      foto: foto('vasos-bloom-estante', 'Vasos de Bloom en el estante del café, con sus diseños celeste, naranja y crema.', 1125, 2000),
+      foto: null,
     },
     locales: {
       eyebrow: 'Nos vemos en Mendoza',
-      titulo: 'Un lugar para quedarte.',
+      titulo: 'Dónde encontrarnos.',
       items: [
         {
           id: 'urban-mall',
           numero: '01',
           nombre: 'Urban Mall',
           zona: 'La Puntilla',
-          direccion: null,
+          direccion: 'Ugarte 1245, Local 5, La Puntilla, Luján de Cuyo, Mendoza',
           horarios: null,
-          urlMapa: '',
-          pendiente: 'Dirección, horarios y mapa por confirmar.',
+          urlMapa: 'https://www.google.com/maps/dir/?api=1&destination=Bloom+Coffee+Hub+Urban+Mall%2C+Ugarte+1245%2C+La+Puntilla%2C+Mendoza',
+          pendiente: 'Horarios por confirmar.',
         },
         {
           id: 'distrito-vistalba',
           numero: '02',
           nombre: 'Distrito Vistalba Mall',
-          zona: null,
-          direccion: null,
+          zona: 'Vistalba',
+          direccion: 'Roque Sáenz Peña 4000, Vistalba, Luján de Cuyo, Mendoza',
           horarios: null,
-          urlMapa: '',
-          pendiente: 'Dirección, horarios y mapa por confirmar.',
+          urlMapa: 'https://www.google.com/maps/dir/?api=1&destination=Distrito+Vistalba+Mall%2C+Roque+S%C3%A1enz+Pe%C3%B1a+4000%2C+Vistalba%2C+Luj%C3%A1n+de+Cuyo%2C+Mendoza',
+          pendiente: 'Horarios por confirmar.',
+        },
+        {
+          id: 'cortaderas', numero: '03', nombre: 'Cortaderas',
+          zona: 'Bloom Food Lab · Centro de producción',
+          estado: 'Próximamente', direccion: null, horarios: null, urlMapa: '',
+          pendiente: 'Fecha de apertura y ubicación exacta por confirmar.',
         },
       ],
     },
@@ -225,6 +263,7 @@ export const contenido = {
       eyebrow: 'De nuestro Food Lab a vos',
       titulo: '¿Empezamos?',
       descripcion: 'Un café, algo rico para tu casa o Bloom en tu negocio. Escribinos y lo charlamos.',
+      condicion: 'Pedidos particulares desde $30.000 · Mayoristas desde $100.000.',
       cta: { label: 'Escribinos', tipo: 'whatsapp', mensaje: 'general' },
       foto: foto(
         'heladera-alfajores-etiquetas',
@@ -271,11 +310,11 @@ export const contenido = {
     titulo: [{ t: 'Vení a quedarte', peso: 'fuerte' }, { t: 'un rato.', peso: 'italica' }],
     descripcion: 'Un café, algo rico y tiempo para vos. O pedilo para llevar: también vale.',
     cta: 'Encontrá tu Bloom',
-    patio: null, patioPendiente: 'FOTO PENDIENTE: patio con canal de agua',
+    patio: patioCafe,
     motivosTitulo: 'Cada día tiene su momento.',
     motivosEyebrow: 'Para qué venir',
     motivos: [
-      { titulo: 'Para trabajar a tu ritmo.', texto: 'Traé lo que estés haciendo. El café lo ponemos nosotros.', foto: foto('vasos-bloom-estante', 'Vasos de Bloom en el estante del café.', 1125, 2000) },
+      { titulo: 'Para trabajar a tu ritmo.', texto: 'Traé lo que estés haciendo. El café lo ponemos nosotros.', foto: null },
       { titulo: 'Para ponerte al día.', texto: 'Una charla sin apuro y algo rico en la mesa.', foto: foto('cheesecake-exterior', 'Cheesecake proteico con frutos rojos, sostenido frente al local de Bloom.', 1125, 2000) },
       { titulo: 'Para llevártelo con vos.', texto: 'Si el día viene a las corridas, llevate tus favoritos.', foto: foto('chocotorta-exterior', 'Chocotorta Bloom en su envase para llevar, frente al local.', 1125, 2000) },
     ],
@@ -283,7 +322,6 @@ export const contenido = {
       eyebrow: 'Un poco de nuestro lugar', titulo: 'Nos vemos acá.',
       items: [
         { id: 'salon', foto: null, pendiente: 'FOTO PENDIENTE: salón y barra', caption: 'El salón' },
-        { id: 'vasos', foto: foto('vasos-bloom-estante', 'Los tres diseños de vasos de Bloom sobre un estante de madera.', 1125, 2000), caption: 'Un café para llevar' },
         { id: 'mesa', foto: null, pendiente: 'FOTO PENDIENTE: café servido en mesa', caption: 'Tu próxima pausa' },
       ],
     },

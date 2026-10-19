@@ -116,8 +116,8 @@ El contenido de las páginas se renderiza con React en el cliente: los HTML por 
 - Logo oficial claro/oscuro, variante Food Lab, manual de marca y tipografías definitivas.
 - Dominio del sitio, URL de Tiendanube y enlaces de productos/categorías.
 - Confirmación del número para minorista y mayorista; email, si se quiere publicar.
-- Dirección, horarios y Maps de Urban Mall / La Puntilla y Distrito Vistalba Mall.
-- Fotos de Anahí, patio con canal de agua, salón, barra, café servido, fachadas y Food Lab. Video de producción y subtítulos si se incorpora; no se utiliza el video de 1,7 segundos del paquete.
+- Horarios de Urban Mall / La Puntilla y Distrito Vistalba Mall.
+- Fotos de Anahí, salón, barra, café servido y Food Lab. Video de producción y subtítulos si se incorpora; no se utiliza el video de 1,7 segundos del paquete.
 - Texturas de ingredientes para las bandas. Actualmente sus espacios están identificados.
 - Opciones de pago minoristas, descuentos, anticipación de tortas y venta por kilo/unidad. No se inventaron condiciones.
 - Precios y condiciones de boxes; variedades de las dos tortas del Paleo. No se publican descuentos sugeridos ni cobros automáticos.

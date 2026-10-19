@@ -18,7 +18,7 @@ export default function BandaProducto({ producto }) {
     <div className="product-ingredient">{producto.imgIngrediente ? <Foto foto={producto.imgIngrediente} sizes="10vw" /> : <span>{producto.ingredientePendiente}</span>}</div>
     <div className="product-end">
       <SelloCircular />
-      {producto.lineas.length > 0 && <div className="product-lines">{producto.lineas.map(linea => <IconoLinea linea={linea} key={linea} />)}</div>}
+      <div className="product-category">{producto.lineas.length > 0 ? producto.lineas.map(linea => <IconoLinea linea={linea} key={linea} />) : <strong>{producto.categoria}</strong>}</div>
       <p className="product-weight"><span>{contenido.ui.peso}</span>{producto.peso}</p>
       <BotonTienda url={producto.urlTienda} variant="outlined">{contenido.ui.verEnTienda}</BotonTienda>
     </div>
