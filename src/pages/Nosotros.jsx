@@ -7,7 +7,7 @@ export default function Nosotros() {
   return <div className="about-page">
     <section className="about-hero page-hero">
       <p className="eyebrow">{datos.eyebrow}</p><TituloMixto partes={datos.titulo} />
-      <div className="about-story"><div className="about-story-copy">{datos.historia.map(parrafo => <p key={parrafo}>{parrafo}</p>)}<span className="handwritten">{datos.anotacion}</span></div><MediaPendiente foto={datos.foto} pendiente={datos.fotoPendiente} className="portrait-frame" sizes="(min-width: 900px) 40vw, 100vw" /></div>
+      <div className={`about-story ${!datos.foto ? 'about-story-text-only' : ''}`}><div className="about-story-copy">{datos.historia.map(parrafo => <p key={parrafo}>{parrafo}</p>)}<span className="handwritten">{datos.anotacion}</span></div>{datos.foto && <MediaPendiente foto={datos.foto} className="portrait-frame" sizes="(min-width: 900px) 40vw, 100vw" />}</div>
     </section>
     <section className="naming-section section-padding" aria-labelledby="naming-title"><p className="naming-word" aria-hidden="true">{contenido.home.origen.palabra}</p><div><p className="eyebrow">{contenido.home.origen.eyebrow}</p><h2 id="naming-title">{datos.origenTitulo}</h2><p>{contenido.home.origen.descripcion}</p></div></section>
     <FoodLab datos={datos.foodLab} />

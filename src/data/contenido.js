@@ -65,6 +65,8 @@ export const contenido = {
       },
       mensajes: {
         general: 'Hola, Bloom. Quería hacerles una consulta.',
+        cafe: 'Hola, Bloom. Quisiera consultar por el café.',
+        eventos: 'Hola, Bloom. Quisiera consultar por desayunos empresariales o un evento.',
         pedido: 'Hola, Bloom. Quiero consultar cómo hacer un pedido.',
         mayorista: 'Hola, Bloom. Tengo un negocio y quiero consultar por la compra mayorista.',
         degustacion: 'Hola, Bloom. Tengo un negocio y quiero consultar por la caja de degustación.',
@@ -282,7 +284,6 @@ export const contenido = {
       'Hoy esa idea tiene una cocina propia y un lugar en Mendoza. Hacemos alimentos reales para el café, para llevar a casa y para sumar a otros negocios.',
     ],
     foto: null,
-    fotoPendiente: 'FOTO PENDIENTE: Anahí, fundadora de Bloom',
     anotacion: 'Un comienzo bien nuestro.',
     origenTitulo: 'Un nombre que empieza con café.',
     pilares: {
@@ -305,25 +306,35 @@ export const contenido = {
     subtitulosLabel: 'Español',
   },
   cafe: {
-    seo: { titulo: 'Café · Visitanos en Mendoza | Bloom', descripcion: 'Vení a Bloom Coffee Hub. Café de especialidad y alimentos libres de gluten, azúcar y conservantes en Urban Mall y Distrito Vistalba Mall.' },
-    eyebrow: 'Bloom Coffee Hub · Mendoza',
-    titulo: [{ t: 'Vení a quedarte', peso: 'fuerte' }, { t: 'un rato.', peso: 'italica' }],
-    descripcion: 'Un café, algo rico y tiempo para vos. O pedilo para llevar: también vale.',
-    cta: 'Encontrá tu Bloom',
+    seo: { titulo: 'No Drama Club · Coffee Hub de Bloom en Mendoza', descripcion: 'Café de especialidad, algo rico y tiempo para disfrutar. Conocé No Drama Club, el Coffee Hub de Bloom en Urban Mall y Distrito Vistalba Mall.' },
+    eyebrow: 'Coffee Hub de Bloom · Mendoza',
+    nombre: 'No Drama Club',
+    titulo: [{ t: 'Vení al café.', peso: 'fuerte' }, { t: 'Quedate un rato.', peso: 'italica' }],
+    descripcion: 'Café de especialidad y algo rico para acompañar. Con amigos, en familia o con un momento para vos.',
+    cta: 'Encontrá tu café',
     patio: patioCafe,
-    motivosTitulo: 'Cada día tiene su momento.',
-    motivosEyebrow: 'Para qué venir',
+    motivosTitulo: 'Tu momento, a tu ritmo.',
+    motivosEyebrow: 'La experiencia No Drama Club',
     motivos: [
-      { titulo: 'Para trabajar a tu ritmo.', texto: 'Traé lo que estés haciendo. El café lo ponemos nosotros.', foto: null },
-      { titulo: 'Para ponerte al día.', texto: 'Una charla sin apuro y algo rico en la mesa.', foto: foto('cheesecake-exterior', 'Cheesecake proteico con frutos rojos, sostenido frente al local de Bloom.', 1125, 2000) },
-      { titulo: 'Para llevártelo con vos.', texto: 'Si el día viene a las corridas, llevate tus favoritos.', foto: foto('chocotorta-exterior', 'Chocotorta Bloom en su envase para llevar, frente al local.', 1125, 2000) },
+      { titulo: 'Café de especialidad.', texto: 'El café tiene su tiempo. Vos también: vení a disfrutarlo.' },
+      { titulo: 'Disfrutamos la compañía.', texto: 'Con amigos, en familia, en pareja o a solas. Hay un lugar para vos.' },
+      { titulo: 'Un espacio para quedarte.', texto: 'Para conversar, trabajar a tu ritmo o hacer una pausa. Sin apuro.' },
     ],
-    galeria: {
-      eyebrow: 'Un poco de nuestro lugar', titulo: 'Nos vemos acá.',
-      items: [
-        { id: 'salon', foto: null, pendiente: 'FOTO PENDIENTE: salón y barra', caption: 'El salón' },
-        { id: 'mesa', foto: null, pendiente: 'FOTO PENDIENTE: café servido en mesa', caption: 'Tu próxima pausa' },
-      ],
+    especialidad: {
+      eyebrow: 'Detrás de cada taza',
+      titulo: 'El café también es un momento.',
+      texto: 'Acercate a la barra, elegí tu café y disfrutá de verlo preparar. Después, buscá tu lugar. Nosotros ponemos algo rico para acompañar.',
+    },
+    eventos: {
+      eyebrow: 'También nos encontramos para celebrar',
+      titulo: 'Compartí un momento Bloom.',
+      texto: 'Un desayuno con tu equipo, el Día de la Madre o una ocasión especial. Contanos qué estás organizando y lo pensamos juntos.',
+      cta: 'Consultá por tu evento',
+    },
+    cierre: {
+      titulo: 'Vení al café.',
+      texto: 'Un café y tiempo para disfrutar. Te esperamos en No Drama Club.',
+      cta: 'Hablemos de tu visita',
     },
   },
   online: {
