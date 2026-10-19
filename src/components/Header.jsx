@@ -32,6 +32,7 @@ export default function Header() {
       <h2 id="menu-title" className="sr-only">{contenido.ui.navegacionPrincipal}</h2>
       <nav id="mobile-menu" aria-label={contenido.ui.navegacionPrincipal}>{contenido.navegacion.map((item, i) => <NavLink key={item.to} to={item.to} end={item.to === '/'} onClick={() => { setNavigating(item.to !== pathname); setOpen(false); }}><span className="menu-number">{String(i + 1).padStart(2, '0')}</span>{item.label}<Arrow diagonal /></NavLink>)}</nav>
       <p className="eyebrow">{contenido.marca.cafe} · {contenido.marca.ubicacion}</p>
+      <p className="brand-concept">{contenido.marca.concepto}</p>
     </Dialog>
   </>;
 }

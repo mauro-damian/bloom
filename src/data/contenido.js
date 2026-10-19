@@ -47,6 +47,7 @@ export const contenido = {
     cafe: 'Bloom · Coffee Hub',
     produccion: 'Bloom Food Lab',
     lema: 'Alimentación consciente',
+    concepto: 'No Drama Club',
     ubicacion: 'Mendoza, Argentina',
     propuesta: 'Alimentos libres de gluten, azúcares y conservantes.',
     sello: 'LIBRE DE GLUTEN · AZÚCARES · CONSERVANTES · ',

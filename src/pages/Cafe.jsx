@@ -14,6 +14,7 @@ export default function Cafe() {
         <p className="eyebrow">{datos.eyebrow}</p>
         <TituloMixto partes={datos.titulo} />
         <p className="page-lead">{datos.descripcion}</p>
+        <p className="brand-concept">{contenido.marca.concepto}</p>
         <Button component="a" href="#locales" variant="contained" endIcon={<Arrow />}>{datos.cta}</Button>
       </div>
     </CieloGrano>

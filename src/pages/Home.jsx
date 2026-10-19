@@ -30,7 +30,7 @@ export default function Home() {
 
     <section className="pathways section-padding" aria-labelledby="caminos-title"><h2 id="caminos-title" className="sr-only">{ui.caminos}</h2><div className="pathways-grid">{home.caminos.map(camino => <article className={`pathway pathway-${camino.id}`} key={camino.id}>
       {camino.id === 'cafe' && <div className="cafe-picture">{camino.foto ? <Foto foto={camino.foto} sizes="(min-width: 900px) 50vw, 100vw" /> : <div className="photo-placeholder"><span className="placeholder-frame" aria-hidden="true"><svg viewBox="0 0 80 60" fill="none"><path d="M1 1h78v58H1zM1 47l24-22 17 15 10-9 27 23" stroke="currentColor" strokeWidth="1"/><circle cx="57" cy="17" r="5" stroke="currentColor"/></svg></span><span>{camino.fotoPendiente}</span></div>}</div>}
-      <div className="pathway-copy"><p className="eyebrow">{camino.eyebrow}</p><h3>{camino.titulo}</h3><p>{camino.descripcion}</p><Link className="text-link" to={camino.cta.to}>{camino.cta.label}<Arrow diagonal /></Link></div>
+      <div className="pathway-copy"><p className="eyebrow">{camino.eyebrow}</p><h3>{camino.titulo}</h3><p>{camino.descripcion}</p>{camino.id === 'cafe' && <p className="brand-concept">{marca.concepto}</p>}<Link className="text-link" to={camino.cta.to}>{camino.cta.label}<Arrow diagonal /></Link></div>
       {camino.id === 'online' && <svg className="pathway-star" viewBox="0 0 100 100" fill="none" aria-hidden="true"><path d="M50 3v94M3 50h94M17 17l66 66M17 83l66-66" stroke="currentColor" strokeWidth="1"/></svg>}
     </article>)}</div></section>
 

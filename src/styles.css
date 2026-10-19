@@ -348,3 +348,19 @@ main:focus { outline: none; }
 .location-map .MuiButton-root { text-decoration: underline; text-underline-offset: 4px; }
 .location-map-panel { margin-top: 12px; border: 1px solid var(--marron); overflow: hidden; }
 .location-map-panel iframe { display: block; width: 100%; height: 220px; border: 0; }
+
+/* No Drama Club acompaña a Bloom como lema secundario. */
+.brand-concept, .footer .brand-concept, .pathway-copy .brand-concept, .cafe-hero-copy .brand-concept { font-family: var(--body); font-size: .78rem; font-style: italic; font-weight: 400; line-height: 1.5; letter-spacing: .03em; text-transform: none; margin: 12px 0 18px; }
+
+/* El título y el alfajor ocupan espacios independientes en la apertura. */
+.hero.hero-v2 { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 4vw; }
+.hero-v2 .hero-copy { width: 100%; max-width: none; min-width: 0; margin-left: 0; container-type: inline-size; }
+.hero-v2 h1 { font-size: clamp(2rem, 5.2vw, 6rem); font-size: clamp(2rem, 11cqw, 6rem); }
+.hero-v2 .mixed-title em { font-size: clamp(2rem, 4.8vw, 5.6rem); font-size: clamp(2rem, 10.2cqw, 5.6rem); }
+.hero-v2 .hero-product { position: relative; width: 100%; max-width: 600px; top: auto; right: auto; transform: none; margin: 25px 0; animation: arrive 850ms 200ms both; }
+@media (max-width: 899px) {
+  .hero.hero-v2 { grid-template-columns: minmax(0, 1fr); gap: 0; min-height: auto; }
+  .hero-v2 h1 { font-size: clamp(2.5rem, 10.5vw, 5.5rem); }
+  .hero-v2 .mixed-title em { font-size: clamp(2.5rem, 10.5vw, 5.5rem); }
+  .hero-v2 .hero-product { width: 82%; max-width: 430px; margin: 65px auto 25px; }
+}
